@@ -9,7 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\pios.projekt.DAL\pios.projekt.DAL.csproj" />
     <ProjectReference Include="..\pios.projekt.models\pios.projekt.models.csproj" />
+    <ProjectReference Include="..\pios.projekt.services\pios.projekt.services.csproj" />
   </ItemGroup>
 
 </Project>

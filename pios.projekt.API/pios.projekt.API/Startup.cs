@@ -1,3 +1,4 @@
+using Adnet.ProcessVisualizerIzvodivost.Web.Model.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,11 +8,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 using pios.projekt.models.Inteface;
+using pios.projekt.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using pios.projekt.DAL.Datatabse;
+using MongoDB.Bson;
+using pios.projekt.DAL;
 
 namespace pios.projekt.API
 {
@@ -34,8 +41,19 @@ namespace pios.projekt.API
 				 c.SwaggerDoc( "v1", new OpenApiInfo { Title = "pios.projekt.API", Version = "v1" } );
 			 } );
 
+			services.Configure<ContextSettings>( options =>
+			{
+				options.ConnectionString = $"{Configuration.GetSection( "MongoConnection:ConnectionString" ).Value}";
+				options.Database = Configuration.GetSection( "MongoConnection:Database" ).Value;
+			} );
 
-			services.AddScoped<IClassroomService, ClassrommService>
+			services.AddSingleton<IClassroomContext, ClassroomContext>();
+
+
+			services.AddScoped<IClassroomService, ClassrommService>();
+			services.AddScoped<IClassroomRepository, ClassroomRepository>();
+
+
 		}
 
 

@@ -8,9 +8,14 @@ namespace pios.projekt.services
 {
 	public class ClassrommService : IClassroomService
 	{
-		public Task<List<Student>> GetStudents()
+		private IClassroomRepository classroomRepository;
+
+		public ClassrommService(IClassroomRepository classroomRepository)
 		{
-			throw new NotImplementedException();
+			this.classroomRepository = classroomRepository;
 		}
+
+		public Task<List<Student>> GetStudents() => classroomRepository.GetStudents();
+
 	}
 }

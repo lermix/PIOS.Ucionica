@@ -20,6 +20,6 @@ namespace pios.projekt.API.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetProcess() => Ok( await classroomService.GetStudents() );
+		public async Task<IActionResult> GetStudents() => Ok( await classroomService.GetStudents() );
 	}
 }

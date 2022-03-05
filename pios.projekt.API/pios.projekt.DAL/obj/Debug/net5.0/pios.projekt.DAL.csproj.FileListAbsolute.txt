@@ -1,0 +1,5 @@
+C:\Users\amuller\source\repos\PIOS.Projekt\pios.projekt.API\pios.projekt.DAL\bin\Debug\net5.0\pios.projekt.models.dll
+C:\Users\amuller\source\repos\PIOS.Projekt\pios.projekt.API\pios.projekt.DAL\obj\Debug\net5.0\pios.projekt.DAL.csprojAssemblyReference.cache
+C:\Users\amuller\source\repos\PIOS.Projekt\pios.projekt.API\pios.projekt.DAL\obj\Debug\net5.0\pios.projekt.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\amuller\source\repos\PIOS.Projekt\pios.projekt.API\pios.projekt.DAL\obj\Debug\net5.0\pios.projekt.DAL.AssemblyInfoInputs.cache
+C:\Users\amuller\source\repos\PIOS.Projekt\pios.projekt.API\pios.projekt.DAL\obj\Debug\net5.0\pios.projekt.DAL.AssemblyInfo.cs

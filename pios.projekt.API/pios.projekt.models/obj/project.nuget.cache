@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "vt+TsyYAEKmHqfWWPUBEZ+rGk6MnnlN3q7d15Ow2FI2KgG+hEr1ToPZOo4nH7o7isWOOHkabY15zgzzxqcbwmw==",
+  "dgSpecHash": "kbaRUEa7yo8i4Bjn3DeM6rUWtjrqluVn3+aXCL1gWgRqk1XPSorOPzKNDo+/pYEd6uKmEH29LCVgSXdlEwH1Cw==",
   "success": true,
   "projectFilePath": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\amuller\\.nuget\\packages\\mongodb.bson\\2.14.1\\mongodb.bson.2.14.1.nupkg.sha512",
+    "C:\\Users\\amuller\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
