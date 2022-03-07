@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adnet.ProcessVisualizerIzvodivost.Web.Model.Models
+namespace pios.projekt.DAL.Datatabse
 {
 	public class ContextSettings
 	{

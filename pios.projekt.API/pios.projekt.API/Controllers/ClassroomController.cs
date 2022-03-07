@@ -21,5 +21,8 @@ namespace pios.projekt.API.Controllers
 
 		[HttpGet]
 		public async Task<IActionResult> GetStudents() => Ok( await classroomService.GetStudents() );
+
+		[HttpPost]
+		public async Task<IActionResult> AddStudent() => Ok( await classroomService.AddStudent() );
 	}
 }

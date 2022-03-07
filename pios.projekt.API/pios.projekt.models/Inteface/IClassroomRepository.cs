@@ -10,5 +10,6 @@ namespace pios.projekt.models.Inteface
 	public interface IClassroomRepository
 	{
 		Task<List<Student>> GetStudents();
+		Task<Student> AddStudent();
 	}
 }

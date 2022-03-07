@@ -15,6 +15,8 @@ namespace pios.projekt.services
 			this.classroomRepository = classroomRepository;
 		}
 
+		public Task<Student> AddStudent() => classroomRepository.AddStudent();
+
 		public Task<List<Student>> GetStudents() => classroomRepository.GetStudents();
 
 	}
