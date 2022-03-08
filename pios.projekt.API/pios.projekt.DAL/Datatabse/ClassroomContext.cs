@@ -17,6 +17,8 @@ namespace pios.projekt.DAL.Datatabse
 
 		public IMongoCollection<Student> students { get; }
 
+        public IMongoCollection<Teacher> teachers { get; }
+
 		public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
 		{
 			MongoClient client = null;
@@ -53,6 +55,22 @@ namespace pios.projekt.DAL.Datatabse
 				catch ( Exception ex )
 				{
 					logger.LogError( ex, ex.Message );
+				}
+			}
+
+			if (teachers != null)
+			{
+				var uniqueIndexModel = new CreateIndexModel<Teacher>(
+					Builders<Teacher>.IndexKeys.Combine(
+						Builders<Teacher>.IndexKeys.Descending(x => x.Id)),
+				new CreateIndexOptions<Teacher>() { Uniques = true });
+				try
+				{
+					await teachers.Indexes.CreateOneAsync(uniqueIndexModel);
+				}
+				catch (Exception ex)
+				{
+					logger.LogError(ex, ex.Message);
 				}
 			}
 

@@ -29,7 +29,14 @@ namespace pios.projekt.DAL
 			return await Task.FromResult( a );
 		}
 
-		public Task<List<Student>> GetStudents()
+        public async Task<Teacher> AddTeacher(Teacher teacher)
+        {
+
+			await context.teachers.InsertOneAsync(teacher);
+			return await Task.FromResult(teacher);
+        }
+
+        public Task<List<Student>> GetStudents()
 		{
 			throw new NotImplementedException();
 		}
