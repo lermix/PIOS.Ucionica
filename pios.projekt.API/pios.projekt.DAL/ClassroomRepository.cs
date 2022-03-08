@@ -4,6 +4,9 @@ using pios.projekt.models.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver;
 
 namespace pios.projekt.DAL
 {
@@ -36,9 +39,7 @@ namespace pios.projekt.DAL
 			return await Task.FromResult(teacher);
         }
 
-        public Task<List<Student>> GetStudents()
-		{
-			throw new NotImplementedException();
-		}
+        public async Task<List<Student>> GetStudents() => await context.students.AsQueryable().ToListAsync();
+		
 	}
 }
