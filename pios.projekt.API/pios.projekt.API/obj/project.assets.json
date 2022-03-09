@@ -956,23 +956,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\amuller\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Korisnik\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
+      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
       "projectName": "pios.projekt.API",
-      "projectPath": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
-      "packagesPath": "C:\\Users\\amuller\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.API\\obj\\",
+      "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
+      "packagesPath": "C:\\Users\\Korisnik\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.API\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\amuller\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Korisnik\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -986,14 +982,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj": {
-              "projectPath": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj"
             },
-            "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj": {
-              "projectPath": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj"
             },
-            "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj": {
-              "projectPath": "C:\\Users\\amuller\\source\\repos\\PIOS.Projekt\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj"
             }
           }
         }

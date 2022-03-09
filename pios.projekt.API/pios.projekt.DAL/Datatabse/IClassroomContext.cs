@@ -13,5 +13,6 @@ namespace pios.projekt.DAL.Datatabse
 		Task InitializeIndexes();
 
 		IMongoCollection<Student> students { get; }
+		IMongoCollection<Teacher> teachers { get; }
 	}
 }
