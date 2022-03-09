@@ -107,11 +107,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj",
+      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj",
       "projectName": "pios.projekt.services",
-      "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj",
+      "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj",
       "packagesPath": "C:\\Users\\Korisnik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\obj\\",
+      "outputPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Korisnik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -128,8 +128,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj": {
-              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj"
             }
           }
         }
@@ -158,7 +158,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

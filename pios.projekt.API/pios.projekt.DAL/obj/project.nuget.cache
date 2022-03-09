@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FIBdI3qXGnSXlOrL3flDAV18hmQF+aHn0YManW8zFTOVC584mAsnh3OBO21brQb0ey95XL31cSVZ6d7k6NCbIA==",
+  "dgSpecHash": "WD45j8x5ldX/yGOasX5Xg9zGJ+fsB6I/02Z5Q653r95m6zD89kfOPTPPR6ex29ms9aPfUtczZUNhiVMJLBviPw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj",
+  "projectFilePath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Korisnik\\.nuget\\packages\\dnsclient\\1.4.0\\dnsclient.1.4.0.nupkg.sha512",
     "C:\\Users\\Korisnik\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.0\\microsoft.extensions.dependencyinjection.6.0.0.nupkg.sha512",

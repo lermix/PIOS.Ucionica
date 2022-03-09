@@ -89,11 +89,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj",
+      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj",
       "projectName": "pios.projekt.models",
-      "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj",
+      "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj",
       "packagesPath": "C:\\Users\\Korisnik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\obj\\",
+      "outputPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Korisnik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -142,7 +142,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

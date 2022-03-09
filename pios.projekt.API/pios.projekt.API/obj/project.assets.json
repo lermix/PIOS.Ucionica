@@ -961,11 +961,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
+      "projectUniqueName": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
       "projectName": "pios.projekt.API",
-      "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
+      "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.API\\pios.projekt.API.csproj",
       "packagesPath": "C:\\Users\\Korisnik\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.API\\obj\\",
+      "outputPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Korisnik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -982,14 +982,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj": {
-              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.DAL\\pios.projekt.DAL.csproj"
             },
-            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj": {
-              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.models\\pios.projekt.models.csproj"
             },
-            "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj": {
-              "projectPath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj"
+            "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj": {
+              "projectPath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj"
             }
           }
         }
@@ -1019,6 +1019,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[5.0.14, 5.0.14]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -1027,7 +1033,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

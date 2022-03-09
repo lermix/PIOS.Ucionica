@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TC5pUJrPykg/upsGvHts5DPm+lw/QRTALV99M1qMVQHJhTktjoR+NjkZ5Vd6NqZNfdydgAUcTF9x5TNV6Pxzkg==",
+  "dgSpecHash": "ZzS8n+3pmPXM6mDqocPONGtXhj+iF96aFsh48ZECollbEpS4MTNQhffZBGhZZFnSwHIXmDzyA9Hbenk578TtVg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Korisnik\\Desktop\\pios\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj",
+  "projectFilePath": "C:\\Users\\Korisnik\\Desktop\\PIOS projekt\\PIOS.Ucionica\\pios.projekt.API\\pios.projekt.services\\pios.projekt.services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Korisnik\\.nuget\\packages\\mongodb.bson\\2.14.1\\mongodb.bson.2.14.1.nupkg.sha512",
     "C:\\Users\\Korisnik\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
