@@ -19,6 +19,8 @@ namespace pios.projekt.DAL.Datatabse
 
         public IMongoCollection<Teacher> teachers { get; }
 
+		public IMongoCollection<SchoolClass> schoolClasses { get; }
+
 		public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
 		{
 			MongoClient client = null;
@@ -63,10 +65,26 @@ namespace pios.projekt.DAL.Datatabse
 				var uniqueIndexModel = new CreateIndexModel<Teacher>(
 					Builders<Teacher>.IndexKeys.Combine(
 						Builders<Teacher>.IndexKeys.Descending(x => x.Id)),
-				new CreateIndexOptions<Teacher>() { Uniques = true });
+				new CreateIndexOptions<Teacher>() { Unique = true });
 				try
 				{
 					await teachers.Indexes.CreateOneAsync(uniqueIndexModel);
+				}
+				catch (Exception ex)
+				{
+					logger.LogError(ex, ex.Message);
+				}
+			}
+
+			if (schoolClasses != null)
+			{
+				var uniqueIndexModel = new CreateIndexModel<SchoolClass>(
+					Builders<SchoolClass>.IndexKeys.Combine(
+						Builders<SchoolClass>.IndexKeys.Descending(x => x.Id)),
+				new CreateIndexOptions<SchoolClass>() { Unique = true });
+				try
+				{
+					await schoolClasses.Indexes.CreateOneAsync(uniqueIndexModel);
 				}
 				catch (Exception ex)
 				{
