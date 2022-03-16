@@ -40,6 +40,23 @@ namespace pios.projekt.DAL
         }
 
         public async Task<List<Student>> GetStudents() => await context.students.AsQueryable().ToListAsync();
-		
-	}
+
+        public async Task<List<SchoolClass>> PutStudentsInClass(List<Student> students)
+        {
+			SchoolClass a = new SchoolClass()
+			{
+				Id = 0,
+				ClassName = "1.A",
+			};    
+			await context.schoolClasses.InsertOneAsync(a);
+			
+			foreach(Student student in students)
+            {
+				a.StudentsInClass.Add(student);
+            }
+
+			return await Task.FromResult(a);
+
+		}
+    }
 }

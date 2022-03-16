@@ -12,5 +12,8 @@ namespace pios.projekt.models.Inteface
 		public Task<List<Student>> GetStudents();
 		public Task<Student> AddStudent();
         public Task<Teacher> AddTeacher(Teacher teacher);
-    }
+
+		public Task<List<SchoolClass>> PutStudentsInClass(List<Student> students);
+
+	}
 }

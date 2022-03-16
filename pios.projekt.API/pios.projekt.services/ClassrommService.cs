@@ -21,5 +21,9 @@ namespace pios.projekt.services
 
         public Task<List<Student>> GetStudents() => classroomRepository.GetStudents();
 
-	}
+        public Task<List<SchoolClass>> PutStudentsInClass(List<Student> students)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

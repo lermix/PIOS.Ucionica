@@ -11,5 +11,11 @@ namespace pios.projekt.models.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+
+        public string Subject { get; set; }
+
+        List<SchoolClass> classes { get; set; }
+
+
     }
 }
