@@ -12,7 +12,7 @@ namespace pios.projekt.models.Models
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public string Subject { get; set; }
+        public List<Subject> Subjects { get; set; }
 
         List<SchoolClass> classes { get; set; }
 

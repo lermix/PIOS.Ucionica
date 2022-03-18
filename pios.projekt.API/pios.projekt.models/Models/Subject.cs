@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace pios.projekt.models.Models
 {
-    public class SchoolClass
+    public class Subject
     {
         public int Id { get; set; }
-        public string ClassName { get; set; }
-
-        public List<Student> StudentsInClass { get; set; }
-        public List<TimetableRow> timetableRows { get; set; }
-
+        public string Name { get; set; }
     }
 }

@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace pios.projekt.services
 {
-	public class ClassrommService : IClassroomService
-	{
-		private IClassroomRepository classroomRepository;
+    public class ClassrommService : IClassroomService
+    {
+        private IClassroomRepository classroomRepository;
 
-		public ClassrommService(IClassroomRepository classroomRepository)
-		{
-			this.classroomRepository = classroomRepository;
-		}
+        public ClassrommService(IClassroomRepository classroomRepository)
+        {
+            this.classroomRepository = classroomRepository;
+        }
 
-		public Task<Student> AddStudent() => classroomRepository.AddStudent();
+        public Task<Student> AddStudent(Student student) => classroomRepository.AddStudent(student);
 
-		public Task<Teacher> AddTeacher(Teacher teacher) => classroomRepository.AddTeacher(teacher);
+        public Task<Teacher> AddTeacher(Teacher teacher) => classroomRepository.AddTeacher(teacher);
 
         public Task<List<Student>> GetStudents() => classroomRepository.GetStudents();
 
