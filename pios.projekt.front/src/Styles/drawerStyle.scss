@@ -1,0 +1,91 @@
+.k-drawer-content {
+    padding: 20px;
+}
+
+.k-drawer-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+.k-drawer-item {
+    align-items: center;
+    user-select: none;
+}
+.weather {
+    margin: 0 auto 30px;
+    text-align: center;
+}
+.weather-icon {
+    display: block;
+    margin: 30px auto 10px;
+    width: 128px;
+    height: 128px;
+}
+.k-drawer-container .k-drawer-items .k-icon {
+    font-size: 20px;
+    margin-right: 16px;
+    height: 20px;
+}
+.custom-toolbar {
+    width: 100%;
+    background-color: #f6f6f6;
+    line-height: 10px;
+    border-bottom: inset;
+    border-bottom-width: 1px;
+    padding: 3px 8px;
+    color: #656565;
+}
+.title {
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 17px;
+}
+.sunny {
+    background: url('https://demos.telerik.com/kendo-ui/content/web/tabstrip/weather.png') transparent no-repeat 0 0;
+}
+.cloudy {
+    background: url('https://demos.telerik.com/kendo-ui/content/web/tabstrip/weather.png') transparent no-repeat -128px 0;
+}
+.item-descr {
+    margin-top: -5px;
+}
+.item-descr-wrap > span {
+    font-size: 70%;
+}
+.item-descr-wrap {
+    display: flex;
+    flex-direction: column;
+}
+.iconAlign {
+    position: relative;
+    bottom: 5px;
+}
+
+.spin {
+    animation-name: spin;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+.k-state-selected {
+    animation-name: grayToPrimary;
+    animation-duration: 2s;
+}
+@keyframes grayToPrimary {
+    from {
+        background-color: rgb(246, 246, 246);
+    }
+    to {
+        background-color: rgb(42, 170, 230);
+    }
+}
