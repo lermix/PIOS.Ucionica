@@ -1,0 +1,154 @@
+$background-color: whitesmoke;
+$main-menu-background-color: #555555;
+$main-menu-font-color: whitesmoke;
+$main-menu-active-background-color: #118ade;
+$main-menu-active-font-color: whitesmoke;
+$main-menu-hover-font-color: #656565;
+
+$other-menu-background-color: #f6f6f6;
+$other-menu-font-color: #2aaae6;
+$other-menu-active-background-color: #f6f6f685;
+$other-menu-hover-font-color: #656565;
+
+@font-face {
+    font-family: 'main-font';
+    src: url('./../fonts/OpenSans-Regular.ttf') format('truetype');
+}
+body {
+    font-family: 'main-font';
+    color: #656565;
+    font-size: 14px;
+}
+
+// TOP NAVIGATION
+.main-menu {
+    background-color: $main-menu-background-color;
+    color: $main-menu-font-color !important;
+    //margin-bottom: 1%;
+    border-width: 1px;
+}
+
+.custom-menu-item {
+    color: $main-menu-font-color !important;
+    padding: 5px 5px;
+    text-decoration: none;
+    font-size: 14;
+    font-weight: 400;
+    &.active {
+        color: whitesmoke !important;
+        background-color: $main-menu-active-background-color !important;
+    }
+
+    &:hover {
+        color: whitesmoke !important;
+        background-color: $main-menu-active-background-color;
+    }
+
+    &:focus {
+        box-shadow: none !important;
+        color: whitesmoke !important;
+    }
+}
+
+.custom-menu-item-right {
+    font-size: 16px;
+    color: $main-menu-font-color !important;
+
+    &:hover {
+        background-color: $main-menu-hover-font-color;
+    }
+
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+
+// COMPONENT NAVIGATION
+.other-menu {
+    background-color: $other-menu-background-color;
+    color: $other-menu-font-color !important;
+    margin: 0;
+    border-width: 1px;
+}
+
+.custom-other-menu-item {
+    color: $other-menu-font-color !important;
+    padding: 8px 8px;
+    &.active {
+        background-color: $other-menu-active-background-color !important;
+    }
+
+    &:hover {
+        background-color: $other-menu-hover-font-color;
+    }
+
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+
+.grid-div {
+    float: left;
+    display: inline-block;
+    font-size: 12px;
+}
+
+.k-grid tbody .k-button,
+.k-ie8 .k-grid tbody button.k-button,
+button.k-button {
+    min-width: 60px;
+}
+
+.k-grid-content {
+    max-height: 600px;
+    font-size: 12px;
+}
+
+.rightText {
+    text-align: right !important;
+}
+
+.k-grid th {
+    font-weight: bold;
+    padding: 4px 6px !important;
+    text-align: center;
+}
+
+.gridToolbarFilters {
+    margin-right: 10px;
+}
+
+.gridToolbarMultiselect {
+    min-width: 300px;
+    max-height: 28px;
+    max-width: 900px;
+    display: inline-block;
+    height: '50px';
+    width: 320px;
+    margin-right: 10px;
+    vertical-align: top;
+    overflow: auto;
+}
+
+.notification-container {
+    z-index: 99999 !important;
+    position: absolute;
+}
+
+.notification {
+    height: auto;
+    width: auto;
+}
+
+.dialog {
+    z-index: 10005 !important;
+}
+
+.center {
+    position: absolute;
+    text-align: center;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
