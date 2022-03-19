@@ -48,22 +48,75 @@ namespace pios.projekt.DAL
 
         public async Task<List<Student>> GetStudents() => await context.students.AsQueryable().ToListAsync();
 
-        public async Task<List<SchoolClass>> PutStudentsInClass(List<Student> students)
+        public async Task<SchoolClass> AddSchoolClass(SchoolClass schoolClass)
         {
-            SchoolClass a = new SchoolClass()
-            {
-                Id = 0,
-                ClassName = "1.A",
-            };
-            await context.schoolClasses.InsertOneAsync(a);
 
-            foreach (Student student in students)
+            ReplaceOneResult result;
+            switch (context.schoolClasses.Find(x => x.Id == schoolClass.Id).CountDocuments())
             {
-                a.StudentsInClass.Add(student);
+                case 0:
+                    await context.schoolClasses.InsertOneAsync(schoolClass);
+                    break;
+                case 1:
+                    var filter = Builders<SchoolClass>.Filter.Eq("_id", schoolClass.Id.ToString());
+                    result = await context.schoolClasses.ReplaceOneAsync(filter, schoolClass);
+                    break;
+                default:
+                    throw new Exception("Multiple processes with same ID found");
             }
 
-            return await Task.FromResult(students);
+            return await Task.FromResult(schoolClass);
+        }
 
+
+
+        public async Task<SchoolClass> PutStudentsInClass(List<Student> students, int schoolclassId)
+        {
+                      
+            SchoolClass schoolClass1 = context.schoolClasses.AsQueryable().FirstOrDefault(x => x.Id == schoolclassId);
+            if (schoolClass1 == null)
+            {
+                return null;
+            }
+            schoolClass1.studentsInClass.AddRange(students);
+            await AddSchoolClass(schoolClass1);
+            return await Task.FromResult(schoolClass1);
+           
+        }
+
+        public async Task<Subject> AddSubjects(Subject subjects)
+        {
+            ReplaceOneResult result;
+            switch (context.subjects.Find(x => x.Id == subjects.Id).CountDocuments())
+            {
+                case 0:
+                    await context.subjects.InsertOneAsync(subjects);
+                    break;
+                case 1:
+                    var filter = Builders<Subject>.Filter.Eq("_id", subjects.Id.ToString());
+                    result = await context.subjects.ReplaceOneAsync(filter, subjects);
+                    break;
+                default:
+                    throw new Exception("Multiple processes with same ID found");
+            }
+
+            return await Task.FromResult(subjects);
+        }
+
+        public async Task<Student> AddSubjectsToStudent(List<Subject> subjects, int studentId)
+        {
+            Student student = context.students.AsQueryable().FirstOrDefault(x => x.Id == studentId);
+            if (student == null)
+            {
+                return null;
+            }
+            student.subjects.AddRange(subjects);
+            foreach(Subject subject in subjects)
+            {
+                await AddSubjects(subject);
+            }
+            
+            return await Task.FromResult(student);
         }
     }
 }

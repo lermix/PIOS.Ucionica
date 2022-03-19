@@ -13,6 +13,13 @@ namespace pios.projekt.models.Inteface
 		Task<Student> AddStudent(Student student);
         Task<Teacher> AddTeacher(Teacher teacher);
 
-		Task<List<SchoolClass>> PutStudentsInClass(List<Student> students);
-    }
+		Task<SchoolClass> AddSchoolClass(SchoolClass schoolClass);
+
+		Task<SchoolClass> PutStudentsInClass(List<Student> students, int schoolclassId);
+
+		Task<Subject> AddSubjects(Subject subject);
+
+		Task<Student> AddSubjectsToStudent(List<Subject> subjects, int studentId);
+
+	}
 }

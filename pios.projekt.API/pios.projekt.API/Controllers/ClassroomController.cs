@@ -36,13 +36,13 @@ namespace pios.projekt.API.Controllers
         public async Task<IActionResult> GetClasses() => throw new NotImplementedException();
 
         [HttpPost]
-        public async Task<IActionResult> AddClass(SchoolClass schoolClass) => throw new NotImplementedException();
+        public async Task<IActionResult> AddClass(SchoolClass schoolClass) => Ok(await classroomService.AddSchoolClass(schoolClass));
 
         [HttpGet]
         public async Task<IActionResult> GetSubjects() => throw new NotImplementedException();
 
         [HttpPost]
-        public async Task<IActionResult> AddSubject(Subject subject) => throw new NotImplementedException();
+        public async Task<IActionResult> AddSubject(Subject subject) => Ok(await classroomService.AddSubject(subject));
 
         [HttpGet]
         public async Task<IActionResult> AddSubjectToTecher(Teacher teacher, Subject subject) => throw new NotImplementedException();

@@ -11,7 +11,7 @@ namespace pios.projekt.models.Models
         public int Id { get; set; }
         public string ClassName { get; set; }
 
-        public List<Student> StudentsInClass { get; set; }
+        public List<Student> studentsInClass { get; set; }
         public List<TimetableRow> timetableRows { get; set; }
 
     }

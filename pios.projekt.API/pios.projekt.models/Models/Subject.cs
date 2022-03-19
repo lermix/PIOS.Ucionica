@@ -10,5 +10,8 @@ namespace pios.projekt.models.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public List<Student> studentsOnSubject { get; set; }
+        public List<Teacher> teachersTeachingSubject { get; set; }
+
     }
 }

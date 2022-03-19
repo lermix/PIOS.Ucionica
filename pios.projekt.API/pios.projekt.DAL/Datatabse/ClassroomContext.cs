@@ -21,7 +21,9 @@ namespace pios.projekt.DAL.Datatabse
 
 		public IMongoCollection<SchoolClass> schoolClasses { get; }
 
-		public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
+        public IMongoCollection<Subject> subjects { get; }
+
+        public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
 		{
 			MongoClient client = null;
 			if ( settings.Value.MongoClientSettings != null )
@@ -92,7 +94,21 @@ namespace pios.projekt.DAL.Datatabse
 				}
 			}
 
-
+			if (subjects != null)
+			{
+				var uniqueIndexModel = new CreateIndexModel<Subject>(
+					Builders<Subject>.IndexKeys.Combine(
+						Builders<Subject>.IndexKeys.Descending(x => x.Id)),
+				new CreateIndexOptions<Subject>() { Unique = true });
+				try
+				{
+					await subjects.Indexes.CreateOneAsync(uniqueIndexModel);
+				}
+				catch (Exception ex)
+				{
+					logger.LogError(ex, ex.Message);
+				}
+			}
 
 		}
 	}

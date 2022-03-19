@@ -16,5 +16,7 @@ namespace pios.projekt.DAL.Datatabse
 		IMongoCollection<Teacher> teachers { get; }
 		IMongoCollection<SchoolClass> schoolClasses { get; }
 
+		IMongoCollection <Subject> subjects { get; }
+
 	}
 }
