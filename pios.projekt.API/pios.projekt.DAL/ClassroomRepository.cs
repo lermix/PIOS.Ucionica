@@ -111,12 +111,18 @@ namespace pios.projekt.DAL
                 return null;
             }
             student.subjects.AddRange(subjects);
-            foreach(Subject subject in subjects)
-            {
-                await AddSubjects(subject);
-            }
-            
             return await Task.FromResult(student);
+        }
+
+        public async Task<Teacher> AddSchoolclassesToTeacher(List<SchoolClass> schoolClasses, int teacherId)
+        {
+            Teacher teacher = context.teachers.AsQueryable().FirstOrDefault(x => x.Id == teacherId);
+            if (teacher == null)
+            {
+                return null;
+            }
+            teacher.schoolClasses.AddRange(schoolClasses);
+            return await Task.FromResult(teacher);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace pios.projekt.models.Models
 
         public List<Subject> Subjects { get; set; }
 
-        List<SchoolClass> classes { get; set; }
+        public List<SchoolClass> schoolClasses { get; set; }
 
 
     }

@@ -21,5 +21,7 @@ namespace pios.projekt.models.Inteface
 
 		Task<Student> AddSubjectsToStudent(List<Subject> subjects, int studentId);
 
+		Task<Teacher> AddSchoolclassesToTeacher(List<SchoolClass> schoolClasses, int teacherId);
+
 	}
 }
