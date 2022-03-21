@@ -185,14 +185,18 @@ namespace pios.projekt.DAL
             return await Task.FromResult(listOfSubjects);
         }
 
-        public async Task <Teacher> AddSubjectToTeacher(Subject subject, int teacherId)
+        public async Task <Teacher> AddSubjectsToTeacher(List<Subject> subjects, int teacherId)
         {
             Teacher teacher = context.teachers.AsQueryable().FirstOrDefault(x => x.Id == teacherId);
             if (teacher == null)
             {
                 return null;
             }
-            teacher.subject=subject;
+            foreach(Subject subject in subjects)
+            {
+                teacher.subjects.Add(subject);
+            }
+            
             return await Task.FromResult(teacher);
 
         }

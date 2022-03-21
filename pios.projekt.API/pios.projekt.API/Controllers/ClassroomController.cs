@@ -45,7 +45,7 @@ namespace pios.projekt.API.Controllers
         public async Task<IActionResult> AddSubject(Subject subject) => Ok(await classroomService.AddSubject(subject));
 
         [HttpGet]
-        public async Task<IActionResult> AddSubjectToTecher(Teacher teacher, Subject subject) => throw new NotImplementedException();
+        public async Task<IActionResult> AddSubjectsToTeacher(List<Subject> subjects, int teacherId) => Ok(await classroomService.AddSubjectsToTeacher(subjects, teacherId));
 
         [HttpPost]
         public async Task<IActionResult> PutStudentsInClass(List<Student> students, int schoolclassId) => Ok(await classroomService.PutStudentsInClass(students,  schoolclassId));
