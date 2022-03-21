@@ -27,19 +27,19 @@ namespace pios.projekt.API.Controllers
         public async Task<IActionResult> AddStudent(Student student) => Ok(await classroomService.AddStudent(student)); 
 
         [HttpGet]
-        public async Task<IActionResult> GetTeachers() => throw new NotImplementedException();
+        public async Task<IActionResult> GetTeachers() => Ok(await classroomService.GetTeachers());
 
         [HttpPost]
         public async Task<IActionResult> AddTeacher(Teacher teacher) => Ok(await classroomService.AddTeacher(teacher));
 
         [HttpGet]
-        public async Task<IActionResult> GetClasses() => throw new NotImplementedException();
+        public async Task<IActionResult> GetSchoolClasses() => Ok(await classroomService.GetSchoolClasses());
 
         [HttpPost]
         public async Task<IActionResult> AddClass(SchoolClass schoolClass) => Ok(await classroomService.AddSchoolClass(schoolClass));
 
         [HttpGet]
-        public async Task<IActionResult> GetSubjects() => throw new NotImplementedException();
+        public async Task<IActionResult> GetSubjects() => Ok(await classroomService.GetSubjects());
 
         [HttpPost]
         public async Task<IActionResult> AddSubject(Subject subject) => Ok(await classroomService.AddSubject(subject));
@@ -55,5 +55,17 @@ namespace pios.projekt.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddSchoolclassesToTeacher(List<SchoolClass> schoolClasses, int teacherId) => Ok(await classroomService.AddSchoolclassesToTeacher(schoolClasses, teacherId));
+
+        [HttpGet]
+        public async Task<IActionResult> GetStudentsSubjects(int studentId) => Ok(await classroomService.GetStudentsSubjects(studentId));
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteStudentFromSchoolclass(int studentId, int schoolClassId) => Ok(await classroomService.DeleteStudentFromSchoolclass(studentId, schoolClassId));
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSubjectFromStudent(int studentId, int subjectId) => Ok(await classroomService.DeleteSubjectFromStudent(studentId, subjectId));
+
+
+
     }
 }

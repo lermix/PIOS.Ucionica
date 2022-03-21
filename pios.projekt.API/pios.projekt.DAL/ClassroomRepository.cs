@@ -124,5 +124,78 @@ namespace pios.projekt.DAL
             teacher.schoolClasses.AddRange(schoolClasses);
             return await Task.FromResult(teacher);
         }
+
+        public async Task<Student> DeleteSubjectFromStudent(int studentId, int subjectId)
+        {
+            Student student = context.students.AsQueryable().FirstOrDefault(x => x.Id == studentId);          
+            if (student == null)
+            {
+                return null;
+            }
+            foreach(Subject subject in student.subjects)
+            {
+                if(subject.Id == subjectId)
+                {
+                    student.subjects.Remove(subject);
+                }
+            }
+
+            //student.subjects = student.subjects.where(x => x.Id != subjectId);            
+            return await Task.FromResult(student); 
+        }
+
+        public async Task<SchoolClass> DeleteStudentFromSchoolclass(int studentId, int schoolClassId)
+        {
+            SchoolClass schoolClass = context.schoolClasses.AsQueryable().FirstOrDefault(x => x.Id == schoolClassId);
+
+            if (schoolClass == null)
+            {
+                return null;
+            }
+            foreach (Student student in schoolClass.studentsInClass)
+            {
+                if (student.Id == studentId)
+                {
+                    schoolClass.studentsInClass.Remove(student);
+                }
+            }
+
+            //student.subjects = student.subjects.where(x => x.Id != subjectId);            
+            return await Task.FromResult(schoolClass);
+        }
+
+        public async Task<List<SchoolClass>> GetSchoolClasses() => await context.schoolClasses.AsQueryable().ToListAsync();
+
+        public async Task<List<Subject>> GetSubjects() => await context.subjects.AsQueryable().ToListAsync();
+
+        public async Task<List<Teacher>> GetTeachers() => await context.teachers.AsQueryable().ToListAsync();
+
+        public async Task<List<Subject>> GetStudentsSubjects(int studentId)
+        {
+            List<Subject> listOfSubjects = new List<Subject>();
+            Student student = context.students.AsQueryable().FirstOrDefault(x => x.Id == studentId);
+            if (student == null)
+            {
+                return null;
+            }
+            foreach(Subject subject in student.subjects)
+            {
+                listOfSubjects.Add(subject);
+            }
+            return await Task.FromResult(listOfSubjects);
+        }
+
+        public async Task <Teacher> AddSubjectToTeacher(Subject subject, int teacherId)
+        {
+            Teacher teacher = context.teachers.AsQueryable().FirstOrDefault(x => x.Id == teacherId);
+            if (teacher == null)
+            {
+                return null;
+            }
+            teacher.subject=subject;
+            return await Task.FromResult(teacher);
+
+        }
+
     }
 }
