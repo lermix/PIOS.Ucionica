@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getTranslate, TranslateFunction } from 'react-localize-redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { getStudents } from '../Stores/Classroom/actions';
 import { AppState } from '../Stores/rootReducer';
 import Timetable from './Timetable';
 
@@ -16,6 +17,10 @@ const Home: React.FC = () => {
             translate: getTranslate(state.localize),
         };
     });
+
+    useEffect(() => {
+        dispatch(getStudents());
+    }, [dispatch]);
 
     return (
         <>

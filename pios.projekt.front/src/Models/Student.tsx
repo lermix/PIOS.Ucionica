@@ -6,3 +6,10 @@ export interface Student {
     surname: string;
     subjects: Subject[];
 }
+
+export class StudentClass implements Student {
+    id = 0;
+    name = '';
+    surname = '';
+    subjects = [];
+}

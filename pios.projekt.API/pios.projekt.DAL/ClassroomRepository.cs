@@ -21,7 +21,6 @@ namespace pios.projekt.DAL
 
         public async Task<Student> AddStudent(Student student)
         {
-
             ReplaceOneResult result;
             switch (context.students.Find(x => x.Id == student.Id).CountDocuments())
             {
@@ -29,7 +28,7 @@ namespace pios.projekt.DAL
                     await context.students.InsertOneAsync(student);
                     break;
                 case 1:
-                    var filter = Builders<Student>.Filter.Eq("_id", student.Id.ToString());
+                    var filter = Builders<Student>.Filter.Eq("_id", student.Id);
                     result = await context.students.ReplaceOneAsync(filter, student);
                     break;
                 default:

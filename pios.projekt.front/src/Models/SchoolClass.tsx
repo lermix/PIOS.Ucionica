@@ -3,5 +3,11 @@ import { Student } from './Student';
 export interface SchoolClass {
     id: number;
     name: string;
-    student: Student[];
+    students: Student[];
+}
+
+export class SchoolClassClass {
+    id = 0;
+    name = '';
+    students = [];
 }

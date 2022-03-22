@@ -29,7 +29,7 @@ namespace pios.projekt.models.Inteface
 
 		public Task<List<SchoolClass>> GetSchoolClasses();
 
-		public Task<List<SchoolClass>> GetSubjects();
+		public Task<List<Subject>> GetSubjects();
 
 		public Task<List<Teacher>> GetTeachers();
 

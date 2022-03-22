@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { initialize } from 'react-localize-redux';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 const languages = require('../../localization/languages.json');
 const translations = require('./../../localization/translations.json');
 
-const languagesList: any = [];
+const languagesList: string[] = [];
 let defaultLanguageCode = '';
 Object.keys(languages).forEach((language) => {
     const lang = languages[language];

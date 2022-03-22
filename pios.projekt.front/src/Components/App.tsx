@@ -9,7 +9,7 @@ import { AppState } from '../Stores/rootReducer';
 
 //COMPONENTS
 import Home from './Home';
-import AddPerson from './Administrative/AddPerson';
+import Managament from './Administrative/Managament';
 
 // kendo globaliztion
 import { IntlProvider, load, loadMessages, LocalizationProvider } from '@progress/kendo-react-intl';
@@ -28,6 +28,7 @@ import enLocalCurrency from 'cldr-numbers-full/main/en-GB/currencies.json';
 import enCaGregorian from 'cldr-dates-full/main/en-GB/ca-gregorian.json';
 import enDateFields from 'cldr-dates-full/main/en-GB/dateFields.json';
 import kendoMessagesEN from './../localization/kendoMessagesLocalization/kendoMessages_en-GB.json';
+import { getClassrooms, getStudents, getSubject, GetTeachers } from '../Stores/Classroom/actions';
 
 load(
     likelySubtags,
@@ -58,6 +59,13 @@ const App: React.FC = () => {
         };
     });
 
+    useEffect(() => {
+        dispatch(getStudents());
+        dispatch(GetTeachers());
+        dispatch(getSubject());
+        dispatch(getClassrooms());
+    }, [dispatch]);
+
     return (
         <LocalizationProvider language={currentLanguageCode}>
             <IntlProvider locale={currentLanguageCode}>
@@ -67,7 +75,7 @@ const App: React.FC = () => {
                             <DrawerContainer>
                                 <Routes>
                                     <Route path="/*" element={<Home />} />
-                                    <Route path="/AddPerson" element={<AddPerson />} />
+                                    <Route path="/AddPerson" element={<Managament />} />
                                 </Routes>
                             </DrawerContainer>{' '}
                         </BrowserRouter>

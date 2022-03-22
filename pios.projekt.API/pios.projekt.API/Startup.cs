@@ -39,12 +39,25 @@ namespace pios.projekt.API
 			 {
 				 c.SwaggerDoc( "v1", new OpenApiInfo { Title = "pios.projekt.API", Version = "v1" } );
 			 } );
+			services.AddCors(o => o.AddPolicy("AllRequestPolicy", builder =>
+			{
+				builder
+					.SetIsOriginAllowed((host) => true)
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					.AllowCredentials()
+					.WithExposedHeaders("x-pagination");
+			}));
 
 			services.Configure<ContextSettings>( options =>
 			{
 				options.ConnectionString = $"{Configuration.GetSection( "MongoConnection:ConnectionString" ).Value}";
 				options.Database = Configuration.GetSection( "MongoConnection:Database" ).Value;
 			} );
+
+		
+
+
 
 			services.AddSingleton<IClassroomContext, ClassroomContext>();
 
@@ -68,6 +81,7 @@ namespace pios.projekt.API
 			}
 
 			app.UseHttpsRedirection();
+			app.UseCors("AllRequestPolicy");
 
 			app.UseRouting();
 
