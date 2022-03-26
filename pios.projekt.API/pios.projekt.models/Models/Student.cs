@@ -14,7 +14,7 @@ namespace pios.projekt.models.Models
 		public string Name { get; set; }
 		public string Surname { get; set; }
 
-		public List<Subject> subjects { get; set; }
+		public List<Subject> subjects { get; set; } = new List<Subject>(); 
 
 	}
 }

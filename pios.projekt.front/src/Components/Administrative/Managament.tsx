@@ -15,6 +15,7 @@ import { SplitterPaneProps } from '@progress/kendo-react-layout/dist/npm/splitte
 import { addOrUpdateClassroom, addOrUpdateStudent, addOrUpdateSubject, addOrUpdateTeacher } from '../../Stores/Classroom/actions';
 import { Subject, SubjectClass } from '../../Models/Subject';
 import { SchoolClass, SchoolClassClass } from '../../Models/SchoolClass';
+import ManagamentWindow from './ManagamentWindow';
 
 interface IStateProps {
     translate: TranslateFunction;
@@ -40,6 +41,7 @@ const Managament: React.FC = () => {
     const [student, setStudent] = useState<Student>(new StudentClass());
     const [subject, setSubject] = useState<SubjectClass>(new SubjectClass());
     const [classroom, setClassroom] = useState<SchoolClass>(new SchoolClassClass());
+    const [WindowVisible, setWindowVisible] = useState<boolean>(false);
     const [panes, setPanes] = React.useState<Array<SplitterPaneProps>>([
         { size: '50%', min: '20px', collapsible: false, resizable: false },
         {},
@@ -82,15 +84,16 @@ const Managament: React.FC = () => {
 
     return (
         <>
+            {WindowVisible && <ManagamentWindow items={subjects} />}
             <Splitter panes={panes} onChange={onNestedChange} orientation={'vertical'}>
                 <Splitter panes={panes} onChange={onChange}>
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Teacher</h2>
                         <p>Name</p>
-                        <Input onChange={(e) => e.value && setTeacher({ ...teacher, name: e.value })} />
+                        <Input value={teacher.name} onChange={(e) => e.value && setTeacher({ ...teacher, name: e.value })} />
 
                         <p>surname</p>
-                        <Input onChange={(e) => e.value && setTeacher({ ...teacher, surname: e.value })} />
+                        <Input value={teacher.surname} onChange={(e) => e.value && setTeacher({ ...teacher, surname: e.value })} />
 
                         <p>Subjects</p>
                         <Grid data={teacher.subjects} style={{ width: '40%' }}>
@@ -104,19 +107,27 @@ const Managament: React.FC = () => {
                             <GridColumn field="name" />
                             <GridColumn cell={DeleteTeacherClassCell} width={30} />
                         </Grid>
-                        <Button style={{ marginTop: 10 }}>Add Class</Button>
+                        <Button style={{ marginTop: 10 }} onClick={() => setWindowVisible(true)}>
+                            Add Class
+                        </Button>
                         <br />
-                        <Button style={{ marginTop: 40 }} onClick={() => dispatch(addOrUpdateTeacher({ ...teacher, id: teachers.length }))}>
+                        <Button
+                            style={{ marginTop: 40 }}
+                            onClick={() => {
+                                dispatch(addOrUpdateTeacher({ ...teacher, id: teachers.length }));
+                                setTeacher(new TeacherClass());
+                            }}
+                        >
                             OK
                         </Button>
                     </div>
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Student</h2>
                         <p>Name</p>
-                        <Input onChange={(e) => e.value && setStudent({ ...teacher, name: e.value })} />
+                        <Input value={student.name} onChange={(e) => e.value && setStudent({ ...teacher, name: e.value })} />
 
                         <p>surname</p>
-                        <Input onChange={(e) => e.value && setStudent({ ...teacher, surname: e.value })} />
+                        <Input value={student.surname} onChange={(e) => e.value && setStudent({ ...teacher, surname: e.value })} />
 
                         <p>Subjects</p>
                         <Grid data={teacher.subjects} style={{ width: '40%' }}>
@@ -125,7 +136,13 @@ const Managament: React.FC = () => {
                         </Grid>
                         <Button style={{ marginTop: 10 }}>Add subject</Button>
                         <br />
-                        <Button style={{ marginTop: 40 }} onClick={() => dispatch(addOrUpdateStudent({ ...student, id: students.length }))}>
+                        <Button
+                            style={{ marginTop: 40 }}
+                            onClick={() => {
+                                dispatch(addOrUpdateStudent({ ...student, id: students.length }));
+                                setStudent(new StudentClass());
+                            }}
+                        >
                             OK
                         </Button>
                     </div>
@@ -134,24 +151,36 @@ const Managament: React.FC = () => {
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Subject</h2>
                         <p>Name</p>
-                        <Input onChange={(e) => e.value && setSubject({ ...subject, name: e.value })} />
+                        <Input value={subject.name} onChange={(e) => e.value && setSubject({ ...subject, name: e.value })} />
                         <br />
-                        <Button style={{ marginTop: 40 }} onClick={() => addOrUpdateSubject({ ...subject, id: subjects.length })}>
+                        <Button
+                            style={{ marginTop: 40 }}
+                            onClick={() => {
+                                dispatch(addOrUpdateSubject({ ...subject, id: subjects.length }));
+                                setSubject(new SubjectClass());
+                            }}
+                        >
                             OK
                         </Button>
                     </div>
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Classroom</h2>
                         <p>Name</p>
-                        <Input onChange={(e) => e.value && setClassroom({ ...classroom, name: e.value })} />
+                        <Input value={classroom.name} onChange={(e) => e.value && setClassroom({ ...classroom, name: e.value })} />
                         <p>Students</p>
-                        <Grid data={teacher.subjects} style={{ width: '40%' }}>
+                        <Grid data={classroom.students} style={{ width: '40%' }}>
                             <GridColumn field="name" />
                             <GridColumn cell={DeleteStudentSubjectCell} width={30} />
                         </Grid>
                         <Button style={{ marginTop: 10 }}>Add subject</Button>
                         <br />
-                        <Button style={{ marginTop: 40 }} onClick={() => addOrUpdateClassroom({ ...classroom, id: classrooms.length })}>
+                        <Button
+                            style={{ marginTop: 40 }}
+                            onClick={() => {
+                                dispatch(addOrUpdateClassroom({ ...classroom, id: classrooms.length }));
+                                setClassroom(new SchoolClassClass());
+                            }}
+                        >
                             OK
                         </Button>
                     </div>

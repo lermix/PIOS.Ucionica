@@ -12,9 +12,9 @@ namespace pios.projekt.models.Models
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public List<Subject> subjects { get; set; }
+        public List<Subject> subjects { get; set; } = new List<Subject>();
 
-        public List<SchoolClass> schoolClasses { get; set; }
+        public List<SchoolClass> schoolClasses { get; set; } = new List<SchoolClass>();
 
 
     }

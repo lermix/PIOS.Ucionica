@@ -5,5 +5,5 @@ export interface Subject {
 
 export class SubjectClass implements Subject {
     id = 0;
-    name = 'classroom';
+    name = '';
 }
