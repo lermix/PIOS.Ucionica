@@ -41,24 +41,20 @@ const Managament: React.FC = () => {
     const [student, setStudent] = useState<Student>(new StudentClass());
     const [subject, setSubject] = useState<SubjectClass>(new SubjectClass());
     const [classroom, setClassroom] = useState<SchoolClass>(new SchoolClassClass());
-    const [WindowVisible, setWindowVisible] = useState<boolean>(false);
+    const [windowVisible, setWindowVisible] = useState<boolean>(false);
+    const [fill, setFill] = useState(() => (data: any[]) => console.error('Fill func not set'));
+    const [windowData, setWindowData] = useState<any[]>([]);
     const [panes, setPanes] = React.useState<Array<SplitterPaneProps>>([
         { size: '50%', min: '20px', collapsible: false, resizable: false },
         {},
         { size: '50%', min: '20px', collapsible: false, resizable: false },
     ]);
 
-    const [nestedPanes, setNestedPanes] = React.useState<Array<any>>([{ size: '40%' }, {}, { size: '30%', resizable: false }]);
-
     const onChange = (event: SplitterOnChangeEvent) => {
         setPanes(event.newState);
     };
 
-    const onNestedChange = (event: SplitterOnChangeEvent) => {
-        setNestedPanes(event.newState);
-    };
-
-    const DeleteTeacherSubjectCell = (cellProps: GridCellProps, setTeacher: React.Dispatch<React.SetStateAction<Teacher>>) => {
+    const DeleteTeacherSubjectCell = (cellProps: GridCellProps) => {
         return (
             <td onClick={() => setTeacher({ ...teacher, subjects: teacher.subjects.filter((e) => e.id !== cellProps.dataItem.id) })}>
                 <span className="k-icon k-i-delete" />
@@ -82,10 +78,16 @@ const Managament: React.FC = () => {
         );
     };
 
+    const OpenSelect = (list: Student[] | Subject[], func: (data: any[]) => void) => {
+        setWindowData(list);
+        setFill(() => func);
+        setWindowVisible(true);
+    };
+
     return (
         <>
-            {WindowVisible && <ManagamentWindow items={subjects} />}
-            <Splitter panes={panes} onChange={onNestedChange} orientation={'vertical'}>
+            {windowVisible && <ManagamentWindow items={windowData} WidnowVisible={setWindowVisible} fillFunc={fill} />}
+            <Splitter panes={panes} orientation={'vertical'}>
                 <Splitter panes={panes} onChange={onChange}>
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Teacher</h2>
@@ -100,15 +102,33 @@ const Managament: React.FC = () => {
                             <GridColumn field="name" />
                             <GridColumn cell={DeleteTeacherSubjectCell} width={30} />
                         </Grid>
-                        <Button style={{ marginTop: 10 }}>Add subject</Button>
+                        <Button
+                            style={{ marginTop: 10 }}
+                            onClick={() =>
+                                OpenSelect(
+                                    subjects.filter((e) => !teacher.subjects.includes(e)),
+                                    (data) => setTeacher({ ...teacher, subjects: [...teacher.subjects, ...data] }),
+                                )
+                            }
+                        >
+                            Add subject
+                        </Button>
 
-                        <p>Clases</p>
-                        <Grid data={teacher.subjects} style={{ width: '40%' }}>
+                        <p>Classroms</p>
+                        <Grid data={teacher.classes} style={{ width: '40%' }}>
                             <GridColumn field="name" />
                             <GridColumn cell={DeleteTeacherClassCell} width={30} />
                         </Grid>
-                        <Button style={{ marginTop: 10 }} onClick={() => setWindowVisible(true)}>
-                            Add Class
+                        <Button
+                            style={{ marginTop: 10 }}
+                            onClick={() =>
+                                OpenSelect(
+                                    classrooms.filter((e) => !teacher.classes.includes(e)),
+                                    (data) => setTeacher({ ...teacher, classes: [...teacher.classes, ...data] }),
+                                )
+                            }
+                        >
+                            Add classroom
                         </Button>
                         <br />
                         <Button
@@ -130,11 +150,21 @@ const Managament: React.FC = () => {
                         <Input value={student.surname} onChange={(e) => e.value && setStudent({ ...teacher, surname: e.value })} />
 
                         <p>Subjects</p>
-                        <Grid data={teacher.subjects} style={{ width: '40%' }}>
+                        <Grid data={student.subjects} style={{ width: '40%' }}>
                             <GridColumn field="name" />
                             <GridColumn cell={DeleteStudentSubjectCell} width={30} />
                         </Grid>
-                        <Button style={{ marginTop: 10 }}>Add subject</Button>
+                        <Button
+                            style={{ marginTop: 10 }}
+                            onClick={() =>
+                                OpenSelect(
+                                    subjects.filter((e) => !student.subjects.includes(e)),
+                                    (data) => setStudent({ ...student, subjects: [...student.subjects, ...data] }),
+                                )
+                            }
+                        >
+                            Add subject
+                        </Button>
                         <br />
                         <Button
                             style={{ marginTop: 40 }}
@@ -170,9 +200,20 @@ const Managament: React.FC = () => {
                         <p>Students</p>
                         <Grid data={classroom.students} style={{ width: '40%' }}>
                             <GridColumn field="name" />
+                            <GridColumn field="surname" />
                             <GridColumn cell={DeleteStudentSubjectCell} width={30} />
                         </Grid>
-                        <Button style={{ marginTop: 10 }}>Add subject</Button>
+                        <Button
+                            style={{ marginTop: 10 }}
+                            onClick={() =>
+                                OpenSelect(
+                                    students.filter((e) => !classroom.students.includes(e)),
+                                    (data) => setClassroom({ ...classroom, students: [...classroom.students, ...data] }),
+                                )
+                            }
+                        >
+                            Add student
+                        </Button>
                         <br />
                         <Button
                             style={{ marginTop: 40 }}
