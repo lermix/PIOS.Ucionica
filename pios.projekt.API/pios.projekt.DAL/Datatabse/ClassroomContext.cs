@@ -22,6 +22,7 @@ namespace pios.projekt.DAL.Datatabse
         public IMongoCollection<SchoolClass> schoolClasses { get; }
 
         public IMongoCollection<Subject> subjects { get; }
+        public IMongoCollection<TimetableRow> timetableRow { get; }
 
         public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
         {
@@ -40,6 +41,7 @@ namespace pios.projekt.DAL.Datatabse
                     teachers = database.GetCollection<Teacher>("Teachers");
                     schoolClasses = database.GetCollection<SchoolClass>("Classrooms");
                     subjects = database.GetCollection<Subject>("Subjects");
+                    timetableRow = database.GetCollection<TimetableRow>("TimetableRows");
 
                 }
             }
@@ -110,6 +112,22 @@ namespace pios.projekt.DAL.Datatabse
                 catch (Exception ex)
                 {
                     logger.LogError(ex, ex.Message);
+                }
+            }
+
+            if ( timetableRow != null )
+            {
+                var uniqueIndexModel = new CreateIndexModel<TimetableRow>(
+                    Builders<TimetableRow>.IndexKeys.Combine(
+                        Builders<TimetableRow>.IndexKeys.Descending( x => x.Id ) ),
+                new CreateIndexOptions<TimetableRow>() { Unique = true } );
+                try
+                {
+                    await timetableRow.Indexes.CreateOneAsync( uniqueIndexModel );
+                }
+                catch ( Exception ex )
+                {
+                    logger.LogError( ex, ex.Message );
                 }
             }
 

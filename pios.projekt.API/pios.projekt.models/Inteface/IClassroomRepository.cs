@@ -34,6 +34,7 @@ namespace pios.projekt.models.Inteface
 		Task<Teacher> AddSubjectsToTeacher(List<Subject> subjects,int studentId);
 		Task<List<Subject>> GetSubjects();
 		Task<List<Teacher>> GetTeachers();
-
+		Task<TimetableRow> AddTimetableRow(TimetableRow timetableRow);
+		Task<TimetableRow> DeleteTimetableRow(TimetableRow timetableRow);
 	}
 }

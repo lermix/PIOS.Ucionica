@@ -2,6 +2,7 @@ import { SchoolClass } from '../../Models/SchoolClass';
 import { Student } from '../../Models/Student';
 import { Subject } from '../../Models/Subject';
 import { Teacher } from '../../Models/Teacher';
+import { TimetableRow } from '../../Models/TimetableRow';
 import * as actionTypes from './actionTypes';
 
 // STATE
@@ -10,6 +11,7 @@ export interface IClassroomState {
     subjects: Subject[];
     teachers: Teacher[];
     classrooms: SchoolClass[];
+    timetableRows: TimetableRow[];
 }
 
 // ACTIONS
@@ -52,6 +54,16 @@ interface IAddOrUpdateClassroom {
     classroom: SchoolClass;
 }
 
+interface IAddTimetableRow {
+    type: typeof actionTypes.ADD_TIMETABLE_ROW;
+    timetableRow: TimetableRow;
+}
+
+interface IDeleteTimetableRow {
+    type: typeof actionTypes.DELETE_TIMETABLE_ROW;
+    timetableRow: TimetableRow;
+}
+
 export type IActionType =
     | IGetStudents
     | IAddOrUpdateStudent
@@ -60,4 +72,6 @@ export type IActionType =
     | IAddOrUpdateClassroom
     | IGetClassrooms
     | IGetSubjects
-    | IGetTeachers;
+    | IGetTeachers
+    | IAddTimetableRow
+    | IDeleteTimetableRow;

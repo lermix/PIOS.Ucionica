@@ -9,7 +9,7 @@ namespace pios.projekt.models.Models
     public class SchoolClass
     {
         public int Id { get; set; }
-        public string ClassName { get; set; }
+        public string Name { get; set; }
 
         public List<Student> studentsInClass { get; set; } = new List<Student>();
         public List<TimetableRow> timetableRows { get; set; } = new List<TimetableRow>();

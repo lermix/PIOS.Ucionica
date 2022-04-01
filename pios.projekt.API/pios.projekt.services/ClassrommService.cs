@@ -26,10 +26,16 @@ namespace pios.projekt.services
         public Task<Teacher> AddSubjectsToTeacher(List<Subject> subjects, int teacherId) => classroomRepository.AddSubjectsToTeacher(subjects, teacherId);  
         public Task<Teacher> AddTeacher(Teacher teacher) => classroomRepository.AddTeacher(teacher);
 
+        public Task<TimetableRow> AddTimetableRow(TimetableRow timetableRow) => classroomRepository.AddTimetableRow(timetableRow);
+
+
         public Task<SchoolClass> DeleteStudentFromSchoolclass(int studentId, int schoolClassId) => 
             classroomRepository.DeleteStudentFromSchoolclass(studentId, schoolClassId);
 
         public Task<Student> DeleteSubjectFromStudent(int studentId, int subjectId) => classroomRepository.DeleteSubjectFromStudent(studentId, subjectId);
+
+        public Task<TimetableRow> DeleteTimetableRow(TimetableRow timetableRow) => classroomRepository.DeleteTimetableRow(timetableRow);
+
 
         public Task<List<SchoolClass>> GetSchoolClasses() => classroomRepository.GetSchoolClasses();
 

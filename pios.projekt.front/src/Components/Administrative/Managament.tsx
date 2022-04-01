@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { getTranslate, TranslateFunction } from 'react-localize-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../Stores/rootReducer';
-import { TimetableInstance } from '../../Models/TimetableInstance';
 import { Splitter, SplitterOnChangeEvent } from '@progress/kendo-react-layout/dist/npm/splitter/Splitter';
 import { Input } from '@progress/kendo-react-inputs';
 import { Teacher, TeacherClass } from '../../Models/Teacher';
@@ -144,10 +143,10 @@ const Managament: React.FC = () => {
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Student</h2>
                         <p>Name</p>
-                        <Input value={student.name} onChange={(e) => e.value && setStudent({ ...teacher, name: e.value })} />
+                        <Input value={student.name} onChange={(e) => setStudent({ ...teacher, name: e.value })} />
 
                         <p>surname</p>
-                        <Input value={student.surname} onChange={(e) => e.value && setStudent({ ...teacher, surname: e.value })} />
+                        <Input value={student.surname} onChange={(e) => setStudent({ ...teacher, surname: e.value })} />
 
                         <p>Subjects</p>
                         <Grid data={student.subjects} style={{ width: '40%' }}>
@@ -181,7 +180,7 @@ const Managament: React.FC = () => {
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Subject</h2>
                         <p>Name</p>
-                        <Input value={subject.name} onChange={(e) => e.value && setSubject({ ...subject, name: e.value })} />
+                        <Input value={subject.name} onChange={(e) => setSubject({ ...subject, name: e.value })} />
                         <br />
                         <Button
                             style={{ marginTop: 40 }}
@@ -196,7 +195,7 @@ const Managament: React.FC = () => {
                     <div className="pane-content" style={{ marginLeft: 15 }}>
                         <h2>Add Classroom</h2>
                         <p>Name</p>
-                        <Input value={classroom.name} onChange={(e) => e.value && setClassroom({ ...classroom, name: e.value })} />
+                        <Input value={classroom.name} onChange={(e) => setClassroom({ ...classroom, name: e.value })} />
                         <p>Students</p>
                         <Grid data={classroom.students} style={{ width: '40%' }}>
                             <GridColumn field="name" />
@@ -218,6 +217,7 @@ const Managament: React.FC = () => {
                         <Button
                             style={{ marginTop: 40 }}
                             onClick={() => {
+                                console.log(classroom);
                                 dispatch(addOrUpdateClassroom({ ...classroom, id: classrooms.length }));
                                 setClassroom(new SchoolClassClass());
                             }}

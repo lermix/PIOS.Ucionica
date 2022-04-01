@@ -3,36 +3,33 @@ import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import React, { useEffect, useState } from 'react';
 import { getTranslate, TranslateFunction } from 'react-localize-redux';
 import { useDispatch, useSelector } from 'react-redux';
+import { TimetableRow } from '../Models/TimetableRow';
 import { AppState } from '../Stores/rootReducer';
-import { TimetableInstance } from '../Models/TimetableInstance';
 
 interface IStateProps {
     translate: TranslateFunction;
+    timetableRows: TimetableRow[];
 }
 
 const Timetable: React.FC = () => {
     const dispatch = useDispatch();
-    const { translate } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
+    const { translate, timetableRows } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
         return {
             translate: getTranslate(state.localize),
+            timetableRows: state.classroom.timetableRows,
         };
     });
 
-    const tempData: TimetableInstance[] = [
-        { id: 0, fromHour: 8, toHour: 9, monday: 'Mat', tuesday: 'fiz', wednesday: 'mat', thursday: 'bio', friday: 'hrv' },
-        { id: 1, fromHour: 9, toHour: 10, monday: 'Mat', tuesday: 'Hrv', wednesday: 'Pov', thursday: 'Teh', friday: 'hrv' },
-    ];
-
     return (
         <>
-            <Grid data={tempData}>
+            <Grid data={timetableRows}>
                 <GridColumn field="fromHour" />
                 <GridColumn field="toHour" />
-                <GridColumn field="monday" />
-                <GridColumn field="tuesday" />
-                <GridColumn field="wednesday" />
-                <GridColumn field="thursday" />
-                <GridColumn field="friday" />
+                <GridColumn field="monday.name" />
+                <GridColumn field="tuesday.name" />
+                <GridColumn field="wednesday.name" />
+                <GridColumn field="thursday.name" />
+                <GridColumn field="friday.name" />
             </Grid>
         </>
     );

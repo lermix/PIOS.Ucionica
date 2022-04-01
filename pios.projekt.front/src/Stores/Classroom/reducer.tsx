@@ -6,6 +6,7 @@ const initialState: IClassroomState = {
     classrooms: [],
     subjects: [],
     teachers: [],
+    timetableRows: [],
 };
 
 // REDUCER
@@ -54,7 +55,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     students: [...tempStudents, action.student],
                 };
         case actionTypes.ADD_OR_UPDATE_SUBJECT:
-            if (state.students.find((e) => e.id == action.subject.id)) {
+            if (state.subjects.find((e) => e.id == action.subject.id)) {
                 tempSubjects.forEach((e) => {
                     if (e.id === action.subject.id) e = action.subject;
                 });
@@ -68,7 +69,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     subjects: [...tempSubjects, action.subject],
                 };
         case actionTypes.ADD_OR_UPDATE_TEACHER:
-            if (state.students.find((e) => e.id == action.teacher.id)) {
+            if (state.teachers.find((e) => e.id == action.teacher.id)) {
                 tempTeachers.forEach((e) => {
                     if (e.id === action.teacher.id) e = action.teacher;
                 });
@@ -82,7 +83,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     teachers: [...tempTeachers, action.teacher],
                 };
         case actionTypes.ADD_OR_UPDTAE_CLASSROOM:
-            if (state.students.find((e) => e.id == action.classroom.id)) {
+            if (state.classrooms.find((e) => e.id == action.classroom.id)) {
                 tempClassrooms.forEach((e) => {
                     if (e.id === action.classroom.id) e = action.classroom;
                 });
@@ -95,6 +96,16 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     ...state,
                     classrooms: [...tempClassrooms, action.classroom],
                 };
+        case actionTypes.ADD_TIMETABLE_ROW:
+            return {
+                ...state,
+                timetableRows: [...state.timetableRows, action.timetableRow],
+            };
+        case actionTypes.DELETE_TIMETABLE_ROW:
+            return {
+                ...state,
+                timetableRows: state.timetableRows.filter((e) => e.id !== action.timetableRow.id),
+            };
 
         default:
             return state;

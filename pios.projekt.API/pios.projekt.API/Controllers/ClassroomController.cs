@@ -65,7 +65,10 @@ namespace pios.projekt.API.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteSubjectFromStudent(int studentId, int subjectId) => Ok(await classroomService.DeleteSubjectFromStudent(studentId, subjectId));
 
+        [HttpPost]
+        public async Task<IActionResult> AddTimetableRow(TimetableRow timetableRow) => Ok( await classroomService.AddTimetableRow( timetableRow ) );
 
-
+        [HttpPost]
+        public async Task<IActionResult> DeleteTimetableRow(TimetableRow timetableRow) => Ok(await classroomService.DeleteTimetableRow(timetableRow) );
     }
 }

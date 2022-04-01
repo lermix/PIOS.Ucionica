@@ -29,6 +29,7 @@ import enCaGregorian from 'cldr-dates-full/main/en-GB/ca-gregorian.json';
 import enDateFields from 'cldr-dates-full/main/en-GB/dateFields.json';
 import kendoMessagesEN from './../localization/kendoMessagesLocalization/kendoMessages_en-GB.json';
 import { getClassrooms, getStudents, getSubject, GetTeachers } from '../Stores/Classroom/actions';
+import TimetableBuilder from './Administrative/TimetableBuilder';
 
 load(
     likelySubtags,
@@ -75,7 +76,8 @@ const App: React.FC = () => {
                             <DrawerContainer>
                                 <Routes>
                                     <Route path="/*" element={<Home />} />
-                                    <Route path="/AddPerson" element={<Managament />} />
+                                    <Route path="/Managament" element={<Managament />} />
+                                    <Route path="/TimetableBuilder" element={<TimetableBuilder />} />
                                 </Routes>
                             </DrawerContainer>{' '}
                         </BrowserRouter>

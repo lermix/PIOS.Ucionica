@@ -8,6 +8,8 @@ import { Student } from '../../Models/Student';
 import { Subject } from '../../Models/Subject';
 import { Teacher } from '../../Models/Teacher';
 import { SchoolClass } from '../../Models/SchoolClass';
+import { TimetableRow } from '../../Models/TimetableRow';
+import { time } from 'console';
 
 const apiActions = {
     GetStudents: (): Promise<Student[]> => requests.get('Classroom/GetStudents'),
@@ -18,6 +20,8 @@ const apiActions = {
     AddOrUpdateSubject: (subject: Subject): Promise<Subject> => requests.post('Classroom/AddSubject', subject),
     AddOrUpdateTeacher: (teacher: Teacher): Promise<Teacher> => requests.post('Classroom/AddTeacher', teacher),
     AddOrUpdateClassroom: (classroom: SchoolClass): Promise<SchoolClass> => requests.post('Classroom/AddClass', classroom),
+    AddTimetableRow: (timetableRow: TimetableRow): Promise<TimetableRow> => requests.post('Classroom/AddTimetableRow', timetableRow),
+    DeleteTimetableRow: (timetableRow: TimetableRow): Promise<TimetableRow> => requests.post('Classroom/DeleteTimetableRow', timetableRow),
 };
 
 export const getStudents = (): ThunkAction<void, AppState, unknown, Action<string>> => async (dispatch) => {
@@ -125,7 +129,9 @@ export const addOrUpdateClassroom =
         };
 
         try {
-            dispatch(addOrUpdateClassrooomSuccess(await apiActions.AddOrUpdateClassroom(classroom)));
+            const added = await apiActions.AddOrUpdateClassroom(classroom);
+            console.log(added);
+            dispatch(addOrUpdateClassrooomSuccess(added));
         } catch (error) {
             console.log(error);
         }
@@ -143,6 +149,40 @@ export const addOrUpdateTeacher =
 
         try {
             dispatch(addOrUpdateTeacherSuccess(await apiActions.AddOrUpdateTeacher(teacher)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+export const addTimetableRow =
+    (timetableRow: TimetableRow): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const addTimetableRowSuccess = (timetableRow: TimetableRow): IActionType => {
+            return {
+                type: actionTypes.ADD_TIMETABLE_ROW,
+                timetableRow: timetableRow,
+            };
+        };
+
+        try {
+            dispatch(addTimetableRowSuccess(await apiActions.AddTimetableRow(timetableRow)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+export const deleteTimetableRow =
+    (timetableRow: TimetableRow): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const deleteTimetableRowSuccess = (timetableRow: TimetableRow): IActionType => {
+            return {
+                type: actionTypes.DELETE_TIMETABLE_ROW,
+                timetableRow: timetableRow,
+            };
+        };
+
+        try {
+            dispatch(deleteTimetableRowSuccess(await apiActions.DeleteTimetableRow(timetableRow)));
         } catch (error) {
             console.log(error);
         }

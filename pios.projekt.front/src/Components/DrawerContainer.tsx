@@ -11,9 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 const items = [
     { text: 'Timetable', selected: true, icon: 'k-icon k-i-share', desc: 'Prikaz', route: '/' },
     { separator: true },
-    { text: 'Add person', selected: true, icon: 'k-icon k-i-share', desc: '', route: '/AddPerson' },
+    { text: 'Managament', selected: true, icon: 'k-icon k-i-share', desc: '', route: '/Managament' },
     { separator: true },
-    { text: 'Tests', selected: true, icon: 'k-i-module-manager', desc: 'Uređivanje', route: '/ProcessCreator' },
+    { text: 'Timetable builder', selected: true, icon: 'k-i-module-manager', route: '/TimetableBuilder' },
     { separator: true },
     { text: 'Settings', icon: 'k-i-gear', desc: '', route: '/Settings' },
     { separator: true },
