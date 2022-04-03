@@ -3,9 +3,9 @@
 import { Grid, GridColumn, GridRowClickEvent, GridRowProps } from '@progress/kendo-react-grid';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 
-import { Student } from '../../Models/Student';
+import { Student } from '../../../Models/Student';
 
-import { Subject } from '../../Models/Subject';
+import { Subject } from '../../../Models/Subject';
 import { Window } from '@progress/kendo-react-dialogs';
 import { Button } from '@progress/kendo-react-buttons';
 

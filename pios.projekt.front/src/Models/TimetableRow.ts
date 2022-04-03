@@ -1,15 +1,15 @@
-import { Subject } from './Subject';
+import { TimetableItem } from './TimetableItem';
 
 export interface TimetableRow {
     id: number;
     classroomId: number;
     fromHour: number;
     toHour: number;
-    monday: Subject | null;
-    tuesday: Subject | null;
-    wednesday: Subject | null;
-    thursday: Subject | null;
-    friday: Subject | null;
+    monday: TimetableItem | null;
+    tuesday: TimetableItem | null;
+    wednesday: TimetableItem | null;
+    thursday: TimetableItem | null;
+    friday: TimetableItem | null;
 }
 
 export class TimetableRowClass implements TimetableRow {

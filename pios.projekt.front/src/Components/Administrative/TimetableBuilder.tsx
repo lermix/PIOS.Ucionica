@@ -3,12 +3,14 @@ import { Button } from '@progress/kendo-react-buttons';
 import { DropDownList } from '@progress/kendo-react-dropdowns';
 import { Grid, GridColumn } from '@progress/kendo-react-grid';
 import { Input } from '@progress/kendo-react-inputs';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getTranslate, TranslateFunction } from 'react-localize-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { SchoolClass } from '../../Models/SchoolClass';
 import { Subject } from '../../Models/Subject';
+import { Teacher } from '../../Models/Teacher';
 import { TimetableRow, TimetableRowClass } from '../../Models/TimetableRow';
+import { addOrUpdateClassroom, addTimetableRow } from '../../Stores/Classroom/actions';
 import { AppState } from '../../Stores/rootReducer';
 import ClassSelectWindow from './ClassSelectWindow';
 
@@ -17,23 +19,29 @@ interface IStateProps {
     timetableRows: TimetableRow[];
     classrooms: SchoolClass[];
     subjects: Subject[];
+    teachers: Teacher[];
 }
 
 const TimetableBuilder: React.FC = () => {
     const dispatch = useDispatch();
-    const { translate, timetableRows, subjects } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
+    const { translate, timetableRows, subjects, teachers } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
         return {
             translate: getTranslate(state.localize),
             timetableRows: state.classroom.timetableRows,
             classrooms: state.classroom.classrooms,
             subjects: state.classroom.subjects,
+            teachers: state.classroom.teachers,
         };
     });
 
     const [selectedClass, setSelectedClass] = useState<SchoolClass | null>(null);
     const [classSelectVisible, setClassSelectVisible] = useState<boolean>(false);
     const [timetableRow, setTimetableRow] = useState<TimetableRow>(new TimetableRowClass());
-    const [timetableRowsState, setTimetableRowsState] = useState<TimetableRow[]>(timetableRows);
+    const [timetableRowsState, setTimetableRowsState] = useState<TimetableRow[]>(selectedClass?.timetableRows ?? []);
+
+    const onSaveToDatabase = () => {
+        if (selectedClass && timetableRows) dispatch(addOrUpdateClassroom({ ...selectedClass, timetableRows: timetableRows }));
+    };
 
     return (
         <>
@@ -52,33 +60,98 @@ const TimetableBuilder: React.FC = () => {
                 <DropDownList
                     style={{ width: '14%' }}
                     data={subjects}
-                    onChange={(e) => setTimetableRow({ ...timetableRow, monday: e.value })}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, monday: { subject: e.value, teacher: null } })}
                     textField={'name'}
                 />
                 <DropDownList
                     style={{ width: '14.28%' }}
                     data={subjects}
-                    onChange={(e) => setTimetableRow({ ...timetableRow, tuesday: e.value })}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, tuesday: { subject: e.value, teacher: null } })}
                     textField={'name'}
                 />
                 <DropDownList
                     style={{ width: '14.1%' }}
                     data={subjects}
-                    onChange={(e) => setTimetableRow({ ...timetableRow, wednesday: e.value })}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, wednesday: { subject: e.value, teacher: null } })}
                     textField={'name'}
                 />
                 <DropDownList
                     style={{ width: '14.1%' }}
                     data={subjects}
-                    onChange={(e) => setTimetableRow({ ...timetableRow, thursday: e.value })}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, thursday: { subject: e.value, teacher: null } })}
                     textField={'name'}
                 />
                 <DropDownList
                     style={{ width: '14.28%' }}
                     data={subjects}
-                    onChange={(e) => setTimetableRow({ ...timetableRow, friday: e.value })}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, friday: { subject: e.value, teacher: null } })}
                     textField={'name'}
                 />
+            </div>
+            <div style={{ display: 'flex', width: '100%', marginBottom: 30 }}>
+                <Input
+                    style={{ width: '14.28%', visibility: 'hidden' }}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, fromHour: Number(e.value) })}
+                />
+                <Input
+                    style={{ width: '14%', visibility: 'hidden' }}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, toHour: Number(e.value) })}
+                />
+                {timetableRow.monday?.subject && (
+                    <DropDownList
+                        style={{ width: '14%' }}
+                        data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.monday?.subject?.id))}
+                        onChange={(e) =>
+                            timetableRow.monday &&
+                            setTimetableRow({ ...timetableRow, monday: { subject: timetableRow.monday.subject, teacher: e.value } })
+                        }
+                        textField={'name'}
+                    />
+                )}
+                {timetableRow.tuesday?.subject && (
+                    <DropDownList
+                        style={{ width: '14%' }}
+                        data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.tuesday?.subject?.id))}
+                        onChange={(e) =>
+                            timetableRow.tuesday &&
+                            setTimetableRow({ ...timetableRow, tuesday: { subject: timetableRow.tuesday.subject, teacher: e.value } })
+                        }
+                        textField={'name'}
+                    />
+                )}
+                {timetableRow.wednesday?.subject && (
+                    <DropDownList
+                        style={{ width: '14%' }}
+                        data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.wednesday?.subject?.id))}
+                        onChange={(e) =>
+                            timetableRow.wednesday &&
+                            setTimetableRow({ ...timetableRow, wednesday: { subject: timetableRow.wednesday.subject, teacher: e.value } })
+                        }
+                        textField={'name'}
+                    />
+                )}
+                {timetableRow.thursday?.subject && (
+                    <DropDownList
+                        style={{ width: '14%' }}
+                        data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.thursday?.subject?.id))}
+                        onChange={(e) =>
+                            timetableRow.thursday &&
+                            setTimetableRow({ ...timetableRow, thursday: { subject: timetableRow.thursday.subject, teacher: e.value } })
+                        }
+                        textField={'name'}
+                    />
+                )}
+                {timetableRow.friday?.subject && (
+                    <DropDownList
+                        style={{ width: '14%' }}
+                        data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.friday?.subject?.id))}
+                        onChange={(e) =>
+                            timetableRow.friday &&
+                            setTimetableRow({ ...timetableRow, friday: { subject: timetableRow.friday.subject, teacher: e.value } })
+                        }
+                        textField={'name'}
+                    />
+                )}
             </div>
             <Button style={{ marginLeft: '90%', marginBottom: 30 }} onClick={() => setTimetableRowsState([...timetableRowsState, timetableRow])}>
                 Add
@@ -92,6 +165,8 @@ const TimetableBuilder: React.FC = () => {
                 <GridColumn field="thursday.name" />
                 <GridColumn field="friday.name" />
             </Grid>
+
+            <Button onClick={() => onSaveToDatabase()}>Save to database</Button>
         </>
     );
 };

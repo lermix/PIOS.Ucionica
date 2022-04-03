@@ -9,7 +9,7 @@ import { AppState } from '../Stores/rootReducer';
 
 //COMPONENTS
 import Home from './Home';
-import Managament from './Administrative/Managament';
+import Managament from './Administrative/Managament/Managament';
 
 // kendo globaliztion
 import { IntlProvider, load, loadMessages, LocalizationProvider } from '@progress/kendo-react-intl';

@@ -41,7 +41,20 @@ namespace pios.projekt.DAL
 		public async Task<Teacher> AddTeacher(Teacher teacher)
 		{
 
-			await context.teachers.InsertOneAsync( teacher );
+			ReplaceOneResult result;
+			switch ( context.teachers.Find( x => x.Id == teacher.Id ).CountDocuments() )
+			{
+				case 0:
+					await context.teachers.InsertOneAsync( teacher );
+					break;
+				case 1:
+					var filter = Builders<Teacher>.Filter.Eq( "_id", teacher.Id );
+					result = await context.teachers.ReplaceOneAsync( filter, teacher );
+					break;
+				default:
+					throw new Exception( "Multiple processes with same ID found" );
+			}
+
 			return await Task.FromResult( teacher );
 		}
 
@@ -57,7 +70,7 @@ namespace pios.projekt.DAL
 					await context.schoolClasses.InsertOneAsync( schoolClass );
 					break;
 				case 1:
-					var filter = Builders<SchoolClass>.Filter.Eq( "_id", schoolClass.Id.ToString() );
+					var filter = Builders<SchoolClass>.Filter.Eq( "_id", schoolClass.Id );
 					result = await context.schoolClasses.ReplaceOneAsync( filter, schoolClass );
 					break;
 				default:
@@ -77,7 +90,7 @@ namespace pios.projekt.DAL
 			{
 				return null;
 			}
-			schoolClass1.studentsInClass.AddRange( students );
+			schoolClass1.students.AddRange( students );
 			await AddSchoolClass( schoolClass1 );
 			return await Task.FromResult( schoolClass1 );
 
@@ -151,11 +164,11 @@ namespace pios.projekt.DAL
 			{
 				return null;
 			}
-			foreach ( Student student in schoolClass.studentsInClass )
+			foreach ( Student student in schoolClass.students )
 			{
 				if ( student.Id == studentId )
 				{
-					schoolClass.studentsInClass.Remove( student );
+					schoolClass.students.Remove( student );
 				}
 			}
 
@@ -200,17 +213,18 @@ namespace pios.projekt.DAL
 
 		}
 
-		public Task<TimetableRow> AddTimetableRow(TimetableRow timetableRow)
+		public Task<TimetableRow> AddTimetableRow(TimetableRow timetableRow, int classroomId)
 		{
-			context.timetableRow.InsertOne( timetableRow );
+			//var filter = Builders<SchoolClass>.Filter.Eq( "",  );
+			//context.schoolClasses.fin
 			return Task.FromResult( timetableRow );
 		}
 
-		public Task<TimetableRow> DeleteTimetableRow(TimetableRow timetableRow)
+		public Task<TimetableRow> DeleteTimetableRow(TimetableRow timetableRow, int classroomId)
 		{
-			var filter = Builders<TimetableRow>.Filter.Eq( "_id", timetableRow.Id.ToString() );
+			//var filter = Builders<SchoolClass>.Filter.Eq( "",  );
 
-			context.timetableRow.DeleteOne( filter );
+			//context.timetableRow.DeleteOne( filter );
 			return Task.FromResult( timetableRow );
 		}
 	}

@@ -41,7 +41,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
             };
 
         case actionTypes.ADD_OR_UPDATE_STUDENT:
-            if (state.students.find((e) => e.id == action.student.id)) {
+            if (state.students.find((e) => e.id === action.student.id)) {
                 tempStudents.forEach((e) => {
                     if (e.id === action.student.id) e = action.student;
                 });
@@ -55,7 +55,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     students: [...tempStudents, action.student],
                 };
         case actionTypes.ADD_OR_UPDATE_SUBJECT:
-            if (state.subjects.find((e) => e.id == action.subject.id)) {
+            if (state.subjects.find((e) => e.id === action.subject.id)) {
                 tempSubjects.forEach((e) => {
                     if (e.id === action.subject.id) e = action.subject;
                 });
@@ -69,7 +69,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     subjects: [...tempSubjects, action.subject],
                 };
         case actionTypes.ADD_OR_UPDATE_TEACHER:
-            if (state.teachers.find((e) => e.id == action.teacher.id)) {
+            if (state.teachers.find((e) => e.id === action.teacher.id)) {
                 tempTeachers.forEach((e) => {
                     if (e.id === action.teacher.id) e = action.teacher;
                 });
@@ -83,13 +83,15 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     teachers: [...tempTeachers, action.teacher],
                 };
         case actionTypes.ADD_OR_UPDTAE_CLASSROOM:
-            if (state.classrooms.find((e) => e.id == action.classroom.id)) {
+            if (state.classrooms.find((e) => e.id === action.classroom.id)) {
                 tempClassrooms.forEach((e) => {
                     if (e.id === action.classroom.id) e = action.classroom;
                 });
+                console.log('debug', tempClassrooms);
+
                 return {
                     ...state,
-                    classrooms: tempClassrooms,
+                    classrooms: [...tempClassrooms],
                 };
             } else
                 return {

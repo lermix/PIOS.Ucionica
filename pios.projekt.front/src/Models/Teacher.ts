@@ -10,7 +10,7 @@ export interface Teacher {
 }
 
 export class TeacherClass implements Teacher {
-    id = 0;
+    id = -1;
     name = '';
     surname = '';
     subjects = [];
