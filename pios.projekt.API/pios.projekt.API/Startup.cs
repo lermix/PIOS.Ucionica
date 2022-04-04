@@ -21,6 +21,8 @@ using pios.projekt.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Settlement.API.Security;
+using pios.projekt.API.Security;
 
 namespace pios.projekt.API
 {
@@ -38,27 +40,31 @@ namespace pios.projekt.API
 		{
 
 			services.AddControllers();
-			var key = "This is my test key";
+			var key = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( "This is my test key"));
 
-			services.AddAuthentication(x =>
-			{
-				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			}).AddJwtBearer(x=>
-			{
-				x.RequireHttpsMetadata = false;
-				x.SaveToken = true;
-				x.TokenValidationParameters = new TokenValidationParameters
+			services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
+				.AddJwtBearer( opt =>
 				{
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
-					ValidateIssuer = false,
-					ValidateAudience = false
+					opt.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateIssuerSigningKey = true,
+						IssuerSigningKey = key,
+						ValidateIssuer = false,
+						ValidateAudience = false,
+						ClockSkew = TimeSpan.Zero
+					};
+				} );
 
-				};
-			});
+			string AdminRole = Configuration.GetValue<string>( "Roles:AdminRole" );
+			string TeacherRole = Configuration.GetValue<string>( "Roles:TeacherRole" );
+			string StudentRole = Configuration.GetValue<string>( "Roles:StudentRole" );
+			services.AddAuthorization( cfg =>
+			{
+				cfg.AddPolicy( "Admin", policy => policy.RequireRole( AdminRole ) );
+				cfg.AddPolicy( "Teacher", policy => policy.RequireRole( TeacherRole, AdminRole ) );
+				cfg.AddPolicy( "Studnet", policy => policy.RequireRole( StudentRole, AdminRole ) );
+			} );
 
-			services.AddSingleton<IJwtAuthenticatinManager>(new JwtAuthenticatinManager(key));
 			services.AddSwaggerGen( c =>
 			 {
 				 c.SwaggerDoc( "v1", new OpenApiInfo { Title = "pios.projekt.API", Version = "v1" } );
@@ -73,21 +79,20 @@ namespace pios.projekt.API
 					.WithExposedHeaders("x-pagination");
 			}));
 
+			//CONTEXT
 			services.Configure<ContextSettings>( options =>
 			{
 				options.ConnectionString = $"{Configuration.GetSection( "MongoConnection:ConnectionString" ).Value}";
 				options.Database = Configuration.GetSection( "MongoConnection:Database" ).Value;
-			} );
-
-		
-
-
-
+			} );				
 			services.AddSingleton<IClassroomContext, ClassroomContext>();
 
 
+			//SERVICES
+			services.AddScoped<JwtTokenService>();
 			services.AddScoped<IClassroomService, ClassrommService>();
 			services.AddScoped<IClassroomRepository, ClassroomRepository>();
+			services.AddScoped<IClaimProvider, ClaimProvider>();
 
 
 		}
