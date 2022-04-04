@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace pios.projekt.API.Controllers
 {
+	[Route( "api/[controller]/[action]" )]
+	[ApiController]
 	public class SecurityController : Controller
 	{
 		private readonly JwtTokenService _tokenService;

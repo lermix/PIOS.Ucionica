@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getActiveLanguage } from 'react-localize-redux';
@@ -30,6 +30,9 @@ import enDateFields from 'cldr-dates-full/main/en-GB/dateFields.json';
 import kendoMessagesEN from './../localization/kendoMessagesLocalization/kendoMessages_en-GB.json';
 import { getClassrooms, getStudents, getSubject, GetTeachers } from '../Stores/Classroom/actions';
 import TimetableBuilder from './Administrative/TimetableBuilder';
+import { setTokenIfExists } from '../Stores/Security/actions';
+import { VerifiedUser } from '../Models/User';
+import Login from './Shared/Login';
 
 load(
     likelySubtags,
@@ -49,23 +52,36 @@ loadMessages(kendoMessagesEN, 'GB');
 
 interface IStateProps {
     currentLanguageCode: string;
+    verifiedUser: VerifiedUser;
 }
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
 
-    const { currentLanguageCode } = useSelector<AppState, IStateProps>((state: AppState) => {
+    const { currentLanguageCode, verifiedUser } = useSelector<AppState, IStateProps>((state: AppState) => {
         return {
             currentLanguageCode: getActiveLanguage(state.localize).code,
+            verifiedUser: state.security.verifiedUser,
         };
     });
+
+    const [userLogedIn, setUserLogedIn] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(getStudents());
         dispatch(GetTeachers());
         dispatch(getSubject());
         dispatch(getClassrooms());
+        dispatch(setTokenIfExists());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (verifiedUser.token) {
+            setUserLogedIn(true);
+        } else {
+            setUserLogedIn(false);
+        }
+    }, [verifiedUser.token, userLogedIn]);
 
     return (
         <LocalizationProvider language={currentLanguageCode}>
@@ -75,9 +91,14 @@ const App: React.FC = () => {
                         <BrowserRouter>
                             <DrawerContainer>
                                 <Routes>
-                                    <Route path="/*" element={<Home />} />
-                                    <Route path="/Managament" element={<Managament />} />
-                                    <Route path="/TimetableBuilder" element={<TimetableBuilder />} />
+                                    {!userLogedIn && <Route path="/" element={<Login />} />}
+                                    {userLogedIn && (
+                                        <>
+                                            <Route path="/*" element={<Home />} />
+                                            <Route path="/Managament" element={<Managament />} />
+                                            <Route path="/TimetableBuilder" element={<TimetableBuilder />} />
+                                        </>
+                                    )}
                                 </Routes>
                             </DrawerContainer>{' '}
                         </BrowserRouter>

@@ -1,5 +1,4 @@
-﻿using MasterData.Models.Dtos.SecurityDtos;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using pios.projekt.models.Models;
 using System;

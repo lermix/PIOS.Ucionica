@@ -7,6 +7,7 @@ import '../Styles/drawerStyle.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../Stores/Security/actions';
 
 const items = [
     { text: 'Timetable', selected: true, icon: 'k-icon k-i-share', desc: 'Prikaz', route: '/' },
@@ -66,6 +67,9 @@ const DrawerContainer: React.FC<MyProps> = ({ children }) => {
             <div className="custom-toolbar">
                 <Button icon="menu" look="flat" onClick={handleClick} />
                 <span className="title">Process visualizer</span>
+                <Button onClick={dispatch(logOut)} look="flat" style={{ float: 'right', marginRight: 20 }}>
+                    Logout
+                </Button>
             </div>
             <Drawer
                 expanded={expanded}

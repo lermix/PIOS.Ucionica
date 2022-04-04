@@ -40,7 +40,7 @@ namespace pios.projekt.API
 		{
 
 			services.AddControllers();
-			var key = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( "This is my test key"));
+			var key = new SymmetricSecurityKey( Encoding.UTF8.GetBytes( Configuration["TokenKey"] ) );
 
 			services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
 				.AddJwtBearer( opt =>
