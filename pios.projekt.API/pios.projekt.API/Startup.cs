@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 using pios.projekt.DAL.Datatabse;
 using MongoDB.Bson;
 using pios.projekt.DAL;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace pios.projekt.API
 {
@@ -35,6 +38,27 @@ namespace pios.projekt.API
 		{
 
 			services.AddControllers();
+			var key = "This is my test key";
+
+			services.AddAuthentication(x =>
+			{
+				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			}).AddJwtBearer(x=>
+			{
+				x.RequireHttpsMetadata = false;
+				x.SaveToken = true;
+				x.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+					ValidateIssuer = false,
+					ValidateAudience = false
+
+				};
+			});
+
+			services.AddSingleton<IJwtAuthenticatinManager>(new JwtAuthenticatinManager(key));
 			services.AddSwaggerGen( c =>
 			 {
 				 c.SwaggerDoc( "v1", new OpenApiInfo { Title = "pios.projekt.API", Version = "v1" } );
@@ -85,6 +109,7 @@ namespace pios.projekt.API
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints( endpoints =>
