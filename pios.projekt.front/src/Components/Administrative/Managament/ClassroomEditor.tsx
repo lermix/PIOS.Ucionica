@@ -9,10 +9,11 @@ import { Subject } from '../../../Models/Subject';
 import { Button } from '@progress/kendo-react-buttons';
 import { Input } from '@progress/kendo-react-inputs';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrUpdateClassroom, addOrUpdateStudent, addOrUpdateTeacher } from '../../../Stores/Classroom/actions';
+import { addOrUpdateClassroom, DeleteClass } from '../../../Stores/Classroom/actions';
 import { SchoolClass, SchoolClassClass } from '../../../Models/SchoolClass';
 import { AppState } from '../../../Stores/rootReducer';
 import { Splitter, SplitterOnChangeEvent, SplitterPaneProps } from '@progress/kendo-react-layout';
+import { DeleteCell } from '../../Shared/DeleteCell';
 
 interface IProps {
     OpenSelect: (list: Student[] | Subject[], func: (data: any[]) => void) => void;
@@ -20,16 +21,14 @@ interface IProps {
 
 interface IStateProps {
     students: Student[];
-    subjects: Subject[];
     classrooms: SchoolClass[];
 }
 
 const ClassroomEditor: React.FC<IProps> = ({ OpenSelect }) => {
     const dispatch = useDispatch();
-    const { students, subjects, classrooms } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
+    const { students, classrooms } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
         return {
             students: state.classroom.students,
-            subjects: state.classroom.subjects,
             classrooms: state.classroom.classrooms,
         };
     });
@@ -74,7 +73,10 @@ const ClassroomEditor: React.FC<IProps> = ({ OpenSelect }) => {
                     <Button
                         style={{ marginTop: 10 }}
                         onClick={() =>
-                            OpenSelect(students, (data) => setClassroom({ ...classroom, students: [...(classroom.students ?? []), ...data] }))
+                            OpenSelect(
+                                students.filter((e) => !classrooms.find((c) => c.students.find((s) => s.id === e.id))),
+                                (data) => setClassroom({ ...classroom, students: [...(classroom.students ?? []), ...data] }),
+                            )
                         }
                     >
                         Add student
@@ -108,6 +110,7 @@ const ClassroomEditor: React.FC<IProps> = ({ OpenSelect }) => {
                             }
                         >
                             <GridColumn field="name" />
+                            <GridColumn width={40} cell={(cellProps) => DeleteCell(cellProps, (dataItem) => dispatch(DeleteClass(dataItem.id)))} />
                         </Grid>
                         {selected && (
                             <Grid style={{ width: '60%' }} data={classrooms.find((e) => e.id === selected.id)?.students}>

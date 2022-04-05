@@ -10,10 +10,11 @@ import { Button } from '@progress/kendo-react-buttons';
 import { Input } from '@progress/kendo-react-inputs';
 import { Teacher, TeacherClass } from '../../../Models/Teacher';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrUpdateStudent, addOrUpdateTeacher } from '../../../Stores/Classroom/actions';
+import { addOrUpdateStudent, addOrUpdateTeacher, DeleteStudent } from '../../../Stores/Classroom/actions';
 import { SchoolClass } from '../../../Models/SchoolClass';
 import { AppState } from '../../../Stores/rootReducer';
 import { Splitter, SplitterOnChangeEvent, SplitterPaneProps } from '@progress/kendo-react-layout';
+import { DeleteCell } from '../../Shared/DeleteCell';
 
 interface IProps {
     OpenSelect: (list: Student[] | Subject[], func: (data: any[]) => void) => void;
@@ -89,7 +90,7 @@ const StudentEditor: React.FC<IProps> = ({ OpenSelect }) => {
                         style={{ marginTop: 40 }}
                         onClick={() => {
                             if (selected) dispatch(addOrUpdateStudent(student));
-                            else dispatch(addOrUpdateStudent({ ...student, id: students.length }));
+                            else dispatch(addOrUpdateStudent({ ...student, id: students.length + 1 }));
                             setStudent(new StudentClass());
                         }}
                     >
@@ -99,7 +100,7 @@ const StudentEditor: React.FC<IProps> = ({ OpenSelect }) => {
                 <div className="pane-content" style={{ marginLeft: 15 }}>
                     <h2>Existing Students</h2>
                     <Grid
-                        style={{ width: '30%', marginRight: 15 }}
+                        style={{ width: '90%', marginRight: 15 }}
                         data={students}
                         onRowClick={(event) => setSelected(event.dataItem)}
                         rowRender={(row, rowProps) =>
@@ -112,6 +113,7 @@ const StudentEditor: React.FC<IProps> = ({ OpenSelect }) => {
                     >
                         <GridColumn field="name" />
                         <GridColumn field="surname" />
+                        <GridColumn width={40} cell={(cellProps) => DeleteCell(cellProps, (dataItem) => dispatch(DeleteStudent(dataItem.id)))} />
                     </Grid>
                     <Button
                         style={{ marginTop: 30 }}

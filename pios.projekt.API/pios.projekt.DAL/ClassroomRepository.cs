@@ -227,5 +227,29 @@ namespace pios.projekt.DAL
 			//context.timetableRow.DeleteOne( filter );
 			return Task.FromResult( timetableRow );
 		}
+
+		public Task<int> DeleteClassroom(int classroomId) => Task.FromResult( (int) context.schoolClasses.DeleteOne( Builders<SchoolClass>.Filter.Eq( "_id", classroomId ) ).DeletedCount );
+
+		public Task<int> DeleteStudent(int studentId)
+		{
+			List<SchoolClass> schoolClasses = context.schoolClasses.AsQueryable().Where( e => e.students.Any( s => s.Id == studentId ) ).ToList();
+			schoolClasses.ForEach( e => e.students = e.students.Where( s => s.Id != studentId ).ToList() );
+			foreach ( SchoolClass schoolClass in schoolClasses )
+				context.schoolClasses.ReplaceOne( Builders<SchoolClass>.Filter.Eq( "_id", schoolClass.Id ), schoolClass );
+
+			return Task.FromResult( (int) context.students.DeleteOne( Builders<Student>.Filter.Eq( "_id", studentId ) ).DeletedCount ); 
+		}
+
+		public Task<int> DeleteSubject(int subjectId)
+		{
+			List<Teacher> teachers = context.teachers.AsQueryable().Where( e => e.subjects.Any( s => s.Id == subjectId ) ).ToList();
+			teachers.ForEach( e => e.subjects = e.subjects.Where( s => s.Id != subjectId ).ToList() );
+			foreach ( Teacher teacher in teachers )
+				context.teachers.ReplaceOne( Builders<Teacher>.Filter.Eq( "_id", teacher.Id ), teacher );
+
+			return Task.FromResult( (int) context.subjects.DeleteOne( Builders<Subject>.Filter.Eq( "_id", subjectId ) ).DeletedCount );
+		}
+
+		public Task<int> DeleteTeacher(int teacherId) => Task.FromResult( (int) context.teachers.DeleteOne( Builders<Teacher>.Filter.Eq( "_id", teacherId ) ).DeletedCount );
 	}
 }

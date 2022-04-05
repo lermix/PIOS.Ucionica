@@ -10,10 +10,11 @@ import { Button } from '@progress/kendo-react-buttons';
 import { Input } from '@progress/kendo-react-inputs';
 import { Teacher, TeacherClass } from '../../../Models/Teacher';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrUpdateTeacher } from '../../../Stores/Classroom/actions';
+import { addOrUpdateTeacher, DeleteTeacher } from '../../../Stores/Classroom/actions';
 import { SchoolClass } from '../../../Models/SchoolClass';
 import { AppState } from '../../../Stores/rootReducer';
 import { Splitter, SplitterOnChangeEvent, SplitterPaneProps } from '@progress/kendo-react-layout';
+import { DeleteCell } from '../../Shared/DeleteCell';
 
 interface IProps {
     OpenSelect: (list: Student[] | Subject[], func: (data: any[]) => void) => void;
@@ -143,6 +144,7 @@ const TeacherEditor: React.FC<IProps> = ({ OpenSelect }) => {
                         <GridColumn field="name" />
                         <GridColumn field="surname" />
                         <GridColumn title="Subjects" cell={SubjectsCell} />
+                        <GridColumn width={40} cell={(cellProps) => DeleteCell(cellProps, (dataItem) => dispatch(DeleteTeacher(dataItem.id)))} />
                     </Grid>
                     <Button
                         style={{ marginTop: 30 }}

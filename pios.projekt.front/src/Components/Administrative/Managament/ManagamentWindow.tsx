@@ -21,7 +21,6 @@ const ManagamentWindow: React.FC<IProps> = ({ items, WidnowVisible, fillFunc }) 
     const onRowClick = (event: GridRowClickEvent) => {
         if (selected.find((e) => e === event.dataItem)) setSelected(selected.filter((e) => e !== event.dataItem));
         else setSelected([...selected, event.dataItem]);
-        console.log(selected);
     };
 
     const rowRender = (row: React.ReactElement<HTMLTableRowElement>, rowProps: GridRowProps) => {

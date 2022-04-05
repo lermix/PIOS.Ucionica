@@ -54,6 +54,26 @@ interface IAddOrUpdateClassroom {
     classroom: SchoolClass;
 }
 
+interface IDeleteSubject {
+    type: typeof actionTypes.DELETE_SUBJECT;
+    subjectId: number;
+}
+
+interface IDeleteStudent {
+    type: typeof actionTypes.DELETE_STUDENT;
+    studentId: number;
+}
+
+interface IDeleteClassroom {
+    type: typeof actionTypes.DELETE_CLASSROOM;
+    classroomID: number;
+}
+
+interface IDeleteTeacher {
+    type: typeof actionTypes.DELETE_TEAHCER;
+    teacherId: number;
+}
+
 interface IAddTimetableRow {
     type: typeof actionTypes.ADD_TIMETABLE_ROW;
     timetableRow: TimetableRow;
@@ -74,4 +94,8 @@ export type IActionType =
     | IGetSubjects
     | IGetTeachers
     | IAddTimetableRow
-    | IDeleteTimetableRow;
+    | IDeleteTimetableRow
+    | IDeleteClassroom
+    | IDeleteStudent
+    | IDeleteSubject
+    | IDeleteTeacher;

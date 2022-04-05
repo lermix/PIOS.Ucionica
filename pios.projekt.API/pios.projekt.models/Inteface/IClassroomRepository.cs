@@ -36,5 +36,9 @@ namespace pios.projekt.models.Inteface
 		Task<List<Teacher>> GetTeachers();
 		Task<TimetableRow> AddTimetableRow(TimetableRow timetableRow, int classroomId);
 		Task<TimetableRow> DeleteTimetableRow(TimetableRow timetableRow, int classroomId);
+		Task<int> DeleteClassroom(int classroomId);
+		Task<int> DeleteStudent(int studentId);
+		Task<int> DeleteSubject(int subjectId);
+		Task<int> DeleteTeacher(int teacherId);
 	}
 }
