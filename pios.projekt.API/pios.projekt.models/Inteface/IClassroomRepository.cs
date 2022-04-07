@@ -40,5 +40,10 @@ namespace pios.projekt.models.Inteface
 		Task<int> DeleteStudent(int studentId);
 		Task<int> DeleteSubject(int subjectId);
 		Task<int> DeleteTeacher(int teacherId);
+		Task<int> DeleteExam(int examId);
+		Task<Exam> AddExam(Exam exam);
+
+		Task<Exam> AddStudentsToExam(List<Student> students, int examId);
+
 	}
 }

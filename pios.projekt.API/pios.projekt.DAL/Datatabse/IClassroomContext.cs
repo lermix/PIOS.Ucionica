@@ -19,6 +19,8 @@ namespace pios.projekt.DAL.Datatabse
 		IMongoCollection <Subject> subjects { get; }
 		IMongoCollection<TimetableRow> timetableRow { get; }
 
+		IMongoCollection<Exam> exams { get; }
+
 
 	}
 }

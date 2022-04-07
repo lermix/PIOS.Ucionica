@@ -56,5 +56,11 @@ namespace pios.projekt.services
 
         public Task<SchoolClass> PutStudentsInClass(List<Student> students, int schoolClassId) => classroomRepository.PutStudentsInClass(students, schoolClassId);
 
+        public Task<int> DeleteExam(int examId) => classroomRepository.DeleteExam(examId);
+
+        public Task<Exam> AddExam(Exam exam) => classroomRepository.AddExam(exam);
+
+        public Task<Exam> AddStudentsToExam(List<Student> students, int examId) => classroomRepository.AddStudentsToExam(students, examId);
+
     }
 }
