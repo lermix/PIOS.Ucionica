@@ -60,7 +60,7 @@ const SubjectEditor: React.FC<IProps> = ({ OpenSelect }) => {
                         style={{ marginTop: 40 }}
                         onClick={() => {
                             if (selected) dispatch(addOrUpdateSubject(subject));
-                            else dispatch(addOrUpdateSubject({ ...subject, id: subjects.length }));
+                            else dispatch(addOrUpdateSubject({ ...subject, id: subjects.length + 1 }));
                             setSubject(new SubjectClass());
                         }}
                     >

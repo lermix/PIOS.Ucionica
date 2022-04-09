@@ -88,8 +88,6 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                 tempClassrooms.forEach((e, i) => {
                     if (e.id === action.classroom.id) tempClassrooms[i] = action.classroom;
                 });
-                console.log('debug', tempClassrooms);
-
                 return {
                     ...state,
                     classrooms: [...tempClassrooms],

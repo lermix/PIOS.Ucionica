@@ -121,7 +121,7 @@ const TeacherEditor: React.FC<IProps> = ({ OpenSelect }) => {
                         style={{ marginTop: 40 }}
                         onClick={() => {
                             if (selected) dispatch(addOrUpdateTeacher(teacher));
-                            else dispatch(addOrUpdateTeacher({ ...teacher, id: teachers.length }));
+                            else dispatch(addOrUpdateTeacher({ ...teacher, id: teachers.length + 1 }));
                             setTeacher(new TeacherClass());
                         }}
                     >
