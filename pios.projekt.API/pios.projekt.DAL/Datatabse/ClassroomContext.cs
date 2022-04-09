@@ -24,6 +24,8 @@ namespace pios.projekt.DAL.Datatabse
         public IMongoCollection<Subject> subjects { get; }
         public IMongoCollection<TimetableRow> timetableRow { get; }
 
+        public IMongoCollection <Exam> exams { get; }
+
         public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
         {
             MongoClient client = null;
@@ -42,7 +44,7 @@ namespace pios.projekt.DAL.Datatabse
                     schoolClasses = database.GetCollection<SchoolClass>("Classrooms");
                     subjects = database.GetCollection<Subject>("Subjects");
                     timetableRow = database.GetCollection<TimetableRow>("TimetableRows");
-
+                    exams = database.GetCollection<Exam>("Exams");
                 }
             }
 
@@ -128,6 +130,21 @@ namespace pios.projekt.DAL.Datatabse
                 catch ( Exception ex )
                 {
                     logger.LogError( ex, ex.Message );
+                }
+            }
+            if (exams != null)
+            {
+                var uniqueIndexModel = new CreateIndexModel<Exam>(
+                    Builders<Exam>.IndexKeys.Combine(
+                        Builders<Exam>.IndexKeys.Descending(x => x.Id)),
+                new CreateIndexOptions<Exam>() { Unique = true });
+                try
+                {
+                    await exams.Indexes.CreateOneAsync(uniqueIndexModel);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, ex.Message);
                 }
             }
 

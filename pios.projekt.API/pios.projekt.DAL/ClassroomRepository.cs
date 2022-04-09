@@ -251,5 +251,44 @@ namespace pios.projekt.DAL
 		}
 
 		public Task<int> DeleteTeacher(int teacherId) => Task.FromResult( (int) context.teachers.DeleteOne( Builders<Teacher>.Filter.Eq( "_id", teacherId ) ).DeletedCount );
+
+
+		public async Task<Exam> AddExam(Exam exam)
+		{
+			ReplaceOneResult result;
+			switch (context.schoolClasses.Find(x => x.Id == exam.Id).CountDocuments())
+			{
+				case 0:
+					await context.exams.InsertOneAsync(exam);
+					break;
+				case 1:
+					var filter = Builders<Exam>.Filter.Eq("_id", exam.Id);
+					result = await context.exams.ReplaceOneAsync(filter, exam);
+					break;
+				default:
+					throw new Exception("Multiple processes with same ID found");
+			}
+
+			return await Task.FromResult(exam);
+		}
+
+		public async Task<Exam> AddStudentsToExam(List<Student> students, int examId)
+		{
+			Exam exam = context.exams.AsQueryable().FirstOrDefault(x => x.Id == examId);
+			if (exam == null)
+			{
+				return null;
+			}
+			exam.students.AddRange(students);
+			return await Task.FromResult(exam);
+		}
+		public Task<int> DeleteExam(int examId) => Task.FromResult((int)context.exams.DeleteOne(Builders<Exam>.Filter.Eq("_id", examId)).DeletedCount);
+
+
+
 	}
+
+	
+
+
 }
