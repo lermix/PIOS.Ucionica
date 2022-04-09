@@ -223,6 +223,7 @@ export const DeleteTeacher =
         };
 
         try {
+            console.log(teacherId);
             await apiActions.DeleteTeacher(teacherId).then((deletedCount) => deletedCount > 0 && dispatch(deleteTeacherSuccess(teacherId)));
         } catch (error) {
             console.log(error);

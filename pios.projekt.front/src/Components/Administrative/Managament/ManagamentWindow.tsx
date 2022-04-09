@@ -38,9 +38,9 @@ const ManagamentWindow: React.FC<IProps> = ({ items, WidnowVisible, fillFunc }) 
                 }}
             >
                 <Grid data={items} onRowClick={onRowClick} rowRender={rowRender}>
-                    {'id' in items && <GridColumn field="id" />}
-                    {'name' in items && <GridColumn field="name" />}
-                    {'surname' in items && <GridColumn field="surname" />}
+                    {'id' in items[0] && <GridColumn field="id" />}
+                    {'name' in items[0] && <GridColumn field="name" />}
+                    {'surname' in items[0] && <GridColumn field="surname" />}
                 </Grid>
                 <Button
                     onClick={() => {

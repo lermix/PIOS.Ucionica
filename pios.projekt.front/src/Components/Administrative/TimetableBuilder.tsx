@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from '@progress/kendo-react-buttons';
 import { DropDownList } from '@progress/kendo-react-dropdowns';
-import { Grid, GridColumn } from '@progress/kendo-react-grid';
+import { Grid, GridCellProps, GridColumn } from '@progress/kendo-react-grid';
 import { Input } from '@progress/kendo-react-inputs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getTranslate, TranslateFunction } from 'react-localize-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { SchoolClass } from '../../Models/SchoolClass';
@@ -39,8 +39,20 @@ const TimetableBuilder: React.FC = () => {
     const [timetableRow, setTimetableRow] = useState<TimetableRow>(new TimetableRowClass());
     const [timetableRowsState, setTimetableRowsState] = useState<TimetableRow[]>(selectedClass?.timetableRows ?? []);
 
+    useEffect(() => {
+        selectedClass && setTimetableRowsState(selectedClass?.timetableRows);
+    }, [selectedClass]);
+
     const onSaveToDatabase = () => {
-        if (selectedClass && timetableRows) dispatch(addOrUpdateClassroom({ ...selectedClass, timetableRows: timetableRows }));
+        if (selectedClass && timetableRows) dispatch(addOrUpdateClassroom({ ...selectedClass, timetableRows: timetableRowsState }));
+    };
+
+    const timetableCell = (cellProps: GridCellProps) => {
+        console.log(cellProps.dataItem[cellProps.field!]);
+        console.log(cellProps.dataItem[cellProps.field!].subject.name);
+        if (cellProps.field)
+            return <td>{cellProps.dataItem[cellProps.field].subject.name + ' - ' + cellProps.dataItem[cellProps.field].teacher.surname}</td>;
+        else return <td></td>;
     };
 
     return (
@@ -55,8 +67,12 @@ const TimetableBuilder: React.FC = () => {
                 </Button>
             </div>
             <div style={{ display: 'flex', width: '100%', marginBottom: 30 }}>
-                <Input style={{ width: '14.28%' }} onChange={(e) => setTimetableRow({ ...timetableRow, fromHour: Number(e.value) })} />
-                <Input style={{ width: '14%' }} onChange={(e) => setTimetableRow({ ...timetableRow, toHour: Number(e.value) })} />
+                <Input
+                    type={'number'}
+                    style={{ width: '14.28%' }}
+                    onChange={(e) => setTimetableRow({ ...timetableRow, fromHour: Number(e.value) })}
+                />
+                <Input type={'number'} style={{ width: '14%' }} onChange={(e) => setTimetableRow({ ...timetableRow, toHour: Number(e.value) })} />
                 <DropDownList
                     style={{ width: '14%' }}
                     data={subjects}
@@ -101,6 +117,7 @@ const TimetableBuilder: React.FC = () => {
                     <DropDownList
                         style={{ width: '14%' }}
                         data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.monday?.subject?.id))}
+                        value={timetableRow.monday.teacher}
                         onChange={(e) =>
                             timetableRow.monday &&
                             setTimetableRow({ ...timetableRow, monday: { subject: timetableRow.monday.subject, teacher: e.value } })
@@ -112,6 +129,7 @@ const TimetableBuilder: React.FC = () => {
                     <DropDownList
                         style={{ width: '14%' }}
                         data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.tuesday?.subject?.id))}
+                        value={timetableRow.tuesday.teacher}
                         onChange={(e) =>
                             timetableRow.tuesday &&
                             setTimetableRow({ ...timetableRow, tuesday: { subject: timetableRow.tuesday.subject, teacher: e.value } })
@@ -123,6 +141,7 @@ const TimetableBuilder: React.FC = () => {
                     <DropDownList
                         style={{ width: '14%' }}
                         data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.wednesday?.subject?.id))}
+                        value={timetableRow.wednesday.teacher}
                         onChange={(e) =>
                             timetableRow.wednesday &&
                             setTimetableRow({ ...timetableRow, wednesday: { subject: timetableRow.wednesday.subject, teacher: e.value } })
@@ -134,6 +153,7 @@ const TimetableBuilder: React.FC = () => {
                     <DropDownList
                         style={{ width: '14%' }}
                         data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.thursday?.subject?.id))}
+                        value={timetableRow.thursday.teacher}
                         onChange={(e) =>
                             timetableRow.thursday &&
                             setTimetableRow({ ...timetableRow, thursday: { subject: timetableRow.thursday.subject, teacher: e.value } })
@@ -145,6 +165,7 @@ const TimetableBuilder: React.FC = () => {
                     <DropDownList
                         style={{ width: '14%' }}
                         data={teachers.filter((e) => e.subjects.find((x) => x.id == timetableRow.friday?.subject?.id))}
+                        value={timetableRow.friday.teacher}
                         onChange={(e) =>
                             timetableRow.friday &&
                             setTimetableRow({ ...timetableRow, friday: { subject: timetableRow.friday.subject, teacher: e.value } })
@@ -159,11 +180,11 @@ const TimetableBuilder: React.FC = () => {
             <Grid data={timetableRowsState}>
                 <GridColumn field="fromHour" />
                 <GridColumn field="toHour" />
-                <GridColumn field="monday.name" />
-                <GridColumn field="tuesday.name" />
-                <GridColumn field="wednesday.name" />
-                <GridColumn field="thursday.name" />
-                <GridColumn field="friday.name" />
+                <GridColumn field="monday" cell={timetableCell} />
+                <GridColumn field="tuesday" cell={timetableCell} />
+                <GridColumn field="wednesday" cell={timetableCell} />
+                <GridColumn field="thursday" cell={timetableCell} />
+                <GridColumn field="friday" cell={timetableCell} />
             </Grid>
 
             <Button onClick={() => onSaveToDatabase()}>Save to database</Button>
