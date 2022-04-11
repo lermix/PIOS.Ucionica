@@ -1,3 +1,5 @@
+import { Exam } from '../../Models/Exam';
+import { Question } from '../../Models/Question';
 import { SchoolClass } from '../../Models/SchoolClass';
 import { Student } from '../../Models/Student';
 import { Subject } from '../../Models/Subject';
@@ -12,6 +14,8 @@ export interface IClassroomState {
     teachers: Teacher[];
     classrooms: SchoolClass[];
     timetableRows: TimetableRow[];
+    exams: Exam[];
+    question: Question[];
 }
 
 // ACTIONS
@@ -35,6 +39,21 @@ interface IGetClassrooms {
     classrooms: SchoolClass[];
 }
 
+interface IGetExams {
+    type: typeof actionTypes.GET_EXAMS;
+    exams: Exam[];
+}
+
+interface IGetQuestions {
+    type: typeof actionTypes.GET_QUESTIONS;
+    questions: Question[];
+}
+
+interface IAddOrUpdateExam {
+    type: typeof actionTypes.ADD_OR_UPDATE_EXAM;
+    exam: Exam;
+}
+
 interface IAddOrUpdateStudent {
     type: typeof actionTypes.ADD_OR_UPDATE_STUDENT;
     student: Student;
@@ -52,6 +71,11 @@ interface IAddOrUpdateTeacher {
 interface IAddOrUpdateClassroom {
     type: typeof actionTypes.ADD_OR_UPDTAE_CLASSROOM;
     classroom: SchoolClass;
+}
+
+interface IAddOrUpdateQuestion {
+    type: typeof actionTypes.ADD_OR_UPDTAE_QUESTION;
+    question: Question;
 }
 
 interface IDeleteSubject {
@@ -74,6 +98,16 @@ interface IDeleteTeacher {
     teacherId: number;
 }
 
+interface IDeleteExam {
+    type: typeof actionTypes.DELETE_EXAM;
+    examId: number;
+}
+
+interface IDeleteQuestion {
+    type: typeof actionTypes.DELETE_QUESTION;
+    questionId: number;
+}
+
 interface IAddTimetableRow {
     type: typeof actionTypes.ADD_TIMETABLE_ROW;
     timetableRow: TimetableRow;
@@ -90,12 +124,18 @@ export type IActionType =
     | IAddOrUpdateSubject
     | IAddOrUpdateTeacher
     | IAddOrUpdateClassroom
+    | IAddOrUpdateExam
     | IGetClassrooms
     | IGetSubjects
     | IGetTeachers
+    | IGetExams
     | IAddTimetableRow
     | IDeleteTimetableRow
     | IDeleteClassroom
+    | IDeleteExam
     | IDeleteStudent
     | IDeleteSubject
-    | IDeleteTeacher;
+    | IDeleteTeacher
+    | IDeleteQuestion
+    | IAddOrUpdateQuestion
+    | IGetQuestions;

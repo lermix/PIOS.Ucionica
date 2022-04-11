@@ -9,22 +9,30 @@ import { Subject } from '../../Models/Subject';
 import { Teacher } from '../../Models/Teacher';
 import { SchoolClass } from '../../Models/SchoolClass';
 import { TimetableRow } from '../../Models/TimetableRow';
+import { Exam } from '../../Models/Exam';
+import { Question } from '../../Models/Question';
 
 const apiActions = {
     GetStudents: (): Promise<Student[]> => requests.get('Classroom/GetStudents'),
     GetSubjects: (): Promise<Subject[]> => requests.get('Classroom/GetSubjects'),
     GetTeachers: (): Promise<Teacher[]> => requests.get('Classroom/GetTeachers'),
     GetClassrooms: (): Promise<SchoolClass[]> => requests.get('Classroom/GetSchoolClasses'),
+    GetExams: (): Promise<Exam[]> => requests.get('Classroom/GetExams'),
+    GetQuestion: (): Promise<Question[]> => requests.get('Classroom/GetQuestions'),
 
     AddOrUpdateStudent: (student: Student): Promise<Student> => requests.post('Classroom/AddStudent', student),
     AddOrUpdateSubject: (subject: Subject): Promise<Subject> => requests.post('Classroom/AddSubject', subject),
     AddOrUpdateTeacher: (teacher: Teacher): Promise<Teacher> => requests.post('Classroom/AddTeacher', teacher),
     AddOrUpdateClassroom: (classroom: SchoolClass): Promise<SchoolClass> => requests.post('Classroom/AddClass', classroom),
+    AddOrUpdateExam: (exam: Exam): Promise<Exam> => requests.post('Classroom/AddExam', exam),
+    AddOrUpdateQuestion: (question: Question): Promise<Question> => requests.post('Classroom/AddQuestion', question),
 
     DeleteStudent: (studentId: number): Promise<number> => requests.post(`Classroom/DeleteStudent?studentId=${studentId}`, {}),
     DeleteSubject: (subjectId: number): Promise<number> => requests.post(`Classroom/DeleteSubject?subjectId=${subjectId}`, {}),
     DeleteTeacher: (teacherId: number): Promise<number> => requests.post(`Classroom/DeleteTeacher?teacherId=${teacherId}`, {}),
     DeleteClassroom: (classroomId: number): Promise<number> => requests.post(`Classroom/DeleteClassroom?classroomId=${classroomId}`, {}),
+    DeleteExam: (examId: number): Promise<number> => requests.post(`Classroom/DeleteExam?examId=${examId}`, {}),
+    DeleteQuestion: (quetionId: number): Promise<number> => requests.post(`Classroom/DeleteQuestion?questionId=${quetionId}`, {}),
 
     AddTimetableRow: (timetableRow: TimetableRow): Promise<TimetableRow> => requests.post('Classroom/AddTimetableRow', timetableRow),
     DeleteTimetableRow: (timetableRow: TimetableRow): Promise<TimetableRow> => requests.post('Classroom/DeleteTimetableRow', timetableRow),
@@ -89,6 +97,53 @@ export const getClassrooms = (): ThunkAction<void, AppState, unknown, Action<str
         console.log(error);
     }
 };
+
+export const getExams = (): ThunkAction<void, AppState, unknown, Action<string>> => async (dispatch) => {
+    const getExamSuccess = (exams: Exam[]): IActionType => {
+        return {
+            type: actionTypes.GET_EXAMS,
+            exams: exams,
+        };
+    };
+
+    try {
+        dispatch(getExamSuccess(await apiActions.GetExams()));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const GetQuestions = (): ThunkAction<void, AppState, unknown, Action<string>> => async (dispatch) => {
+    const getQuestionsuccess = (questions: Question[]): IActionType => {
+        return {
+            type: actionTypes.GET_QUESTIONS,
+            questions: questions,
+        };
+    };
+
+    try {
+        dispatch(getQuestionsuccess(await apiActions.GetQuestion()));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const addOrUpdateExam =
+    (exam: Exam): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const addOrUpdateExam = (exam: Exam): IActionType => {
+            return {
+                type: actionTypes.ADD_OR_UPDATE_EXAM,
+                exam: exam,
+            };
+        };
+
+        try {
+            dispatch(addOrUpdateExam(await apiActions.AddOrUpdateExam(exam)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 export const addOrUpdateStudent =
     (student: Student): ThunkAction<void, AppState, unknown, Action<string>> =>
@@ -160,6 +215,23 @@ export const addOrUpdateTeacher =
         }
     };
 
+export const addOrUpdateQuestion =
+    (question: Question): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const addOrUpdateQuestionSuccess = (question: Question): IActionType => {
+            return {
+                type: actionTypes.ADD_OR_UPDTAE_QUESTION,
+                question: question,
+            };
+        };
+
+        try {
+            dispatch(addOrUpdateQuestionSuccess(await apiActions.AddOrUpdateQuestion(question)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 export const addTimetableRow =
     (timetableRow: TimetableRow): ThunkAction<void, AppState, unknown, Action<string>> =>
     async (dispatch) => {
@@ -194,6 +266,23 @@ export const deleteTimetableRow =
         }
     };
 
+export const DeleteExam =
+    (examId: number): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const delteExamSucces = (examId: number): IActionType => {
+            return {
+                type: actionTypes.DELETE_EXAM,
+                examId: examId,
+            };
+        };
+
+        try {
+            await apiActions.DeleteExam(examId).then((deletedCount) => deletedCount > 0 && dispatch(delteExamSucces(examId)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 export const DeleteStudent =
     (studentId: number): ThunkAction<void, AppState, unknown, Action<string>> =>
     async (dispatch) => {
@@ -205,7 +294,6 @@ export const DeleteStudent =
         };
 
         try {
-            console.log('Here');
             await apiActions.DeleteStudent(studentId).then((deletedCount) => deletedCount > 0 && dispatch(deletetudentSuccess(studentId)));
         } catch (error) {
             console.log(error);
@@ -259,6 +347,23 @@ export const DeleteClass =
 
         try {
             await apiActions.DeleteClassroom(classId).then((deletedCount) => deletedCount > 0 && dispatch(deleteClassSuccess(classId)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+export const DeleteQuestion =
+    (questionId: number): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const deleteQuestionSuccess = (questionId: number): IActionType => {
+            return {
+                type: actionTypes.DELETE_QUESTION,
+                questionId: questionId,
+            };
+        };
+
+        try {
+            await apiActions.DeleteQuestion(questionId).then((deletedCount) => deletedCount > 0 && dispatch(deleteQuestionSuccess(questionId)));
         } catch (error) {
             console.log(error);
         }

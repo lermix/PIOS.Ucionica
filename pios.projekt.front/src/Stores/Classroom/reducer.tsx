@@ -7,6 +7,8 @@ const initialState: IClassroomState = {
     subjects: [],
     teachers: [],
     timetableRows: [],
+    exams: [],
+    question: [],
 };
 
 // REDUCER
@@ -15,6 +17,8 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
     const tempSubjects = state.subjects;
     const tempTeachers = state.teachers;
     const tempClassrooms = state.classrooms;
+    const tempExams = state.exams;
+    const tempQuestion = state.question;
     switch (action.type) {
         case actionTypes.GET_STUDENTS:
             return {
@@ -39,7 +43,30 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                 ...state,
                 classrooms: action.classrooms,
             };
-
+        case actionTypes.GET_QUESTIONS:
+            return {
+                ...state,
+                question: action.questions,
+            };
+        case actionTypes.GET_EXAMS:
+            return {
+                ...state,
+                exams: action.exams,
+            };
+        case actionTypes.ADD_OR_UPDATE_EXAM:
+            if (state.exams.find((e) => e.id === action.exam.id)) {
+                tempStudents.forEach((e, i) => {
+                    if (e.id === action.exam.id) tempExams[i] = action.exam;
+                });
+                return {
+                    ...state,
+                    exams: tempExams,
+                };
+            } else
+                return {
+                    ...state,
+                    exams: [...tempExams, action.exam],
+                };
         case actionTypes.ADD_OR_UPDATE_STUDENT:
             if (state.students.find((e) => e.id === action.student.id)) {
                 tempStudents.forEach((e, i) => {
@@ -97,10 +124,29 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                     ...state,
                     classrooms: [...tempClassrooms, action.classroom],
                 };
+        case actionTypes.ADD_OR_UPDTAE_QUESTION:
+            if (state.question.find((e) => e.id === action.question.id)) {
+                tempQuestion.forEach((e, i) => {
+                    if (e.id === action.question.id) tempQuestion[i] = action.question;
+                });
+                return {
+                    ...state,
+                    question: [...tempQuestion],
+                };
+            } else
+                return {
+                    ...state,
+                    question: [...tempQuestion, action.question],
+                };
         case actionTypes.ADD_TIMETABLE_ROW:
             return {
                 ...state,
                 timetableRows: [...state.timetableRows, action.timetableRow],
+            };
+        case actionTypes.DELETE_EXAM:
+            return {
+                ...state,
+                exams: state.exams.filter((e) => e.id !== action.examId),
             };
         case actionTypes.DELETE_TIMETABLE_ROW:
             return {
@@ -126,6 +172,11 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
             return {
                 ...state,
                 teachers: state.teachers.filter((e) => e.id !== action.teacherId),
+            };
+        case actionTypes.DELETE_QUESTION:
+            return {
+                ...state,
+                question: state.question.filter((e) => e.id !== action.questionId),
             };
 
         default:

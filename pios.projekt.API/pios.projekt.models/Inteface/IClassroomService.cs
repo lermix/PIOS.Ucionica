@@ -44,6 +44,9 @@ namespace pios.projekt.models.Inteface
 
 		public Task<Exam> AddStudentsToExam(List<Student> students, int examId);
 		public Task<Exam> AddExam(Exam exam);
-
+		Task<List<Exam>> GetExams();
+		Task<List<Question>> GetQuestions();
+		Task<Question> AddQuestion(Question question);
+		Task<int> DeleteQuestion(int questionId);
 	}
 }

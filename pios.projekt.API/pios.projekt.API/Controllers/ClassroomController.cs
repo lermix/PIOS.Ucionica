@@ -80,6 +80,9 @@ namespace pios.projekt.API.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteTimetableRow(TimetableRow timetableRow, int ClassroomId) => Ok(await classroomService.DeleteTimetableRow(timetableRow, ClassroomId ) );
 
+        [HttpGet]
+        public async Task<IActionResult> GetExams() => Ok(await classroomService.GetExams());
+
         [HttpPost]
         public async Task<IActionResult> DeleteExam(int examId) => Ok(await classroomService.DeleteExam(examId));
 
@@ -88,6 +91,15 @@ namespace pios.projekt.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddStudentsToExam(List<Student> students, int examId) => Ok(await classroomService.AddStudentsToExam(students, examId));
+
+        [HttpGet]
+        public async Task<IActionResult> GetQuestions() => Ok( await classroomService.GetQuestions(  ) );
+
+        [HttpPost]
+        public async Task<IActionResult> AddQuestion(Question question) => Ok( await classroomService.AddQuestion(question) );
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteQuestion(int questionId) => Ok( await classroomService.DeleteQuestion(questionId) );
 
 
     }

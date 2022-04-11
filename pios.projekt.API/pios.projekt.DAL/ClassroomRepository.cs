@@ -279,13 +279,35 @@ namespace pios.projekt.DAL
 			{
 				return null;
 			}
-			exam.students.AddRange(students);
+			exam.Students.AddRange(students);
 			return await Task.FromResult(exam);
 		}
 		public Task<int> DeleteExam(int examId) => Task.FromResult((int)context.exams.DeleteOne(Builders<Exam>.Filter.Eq("_id", examId)).DeletedCount);
 
+		public Task<List<Exam>> GetExams() => context.exams.AsQueryable().ToListAsync();
 
+		public Task<List<Question>> GetQuestions() => context.questions.AsQueryable().ToListAsync();
 
+		public async Task<Question> AddQuestion(Question question)
+		{
+			ReplaceOneResult result;
+			switch ( context.questions.Find( x => x.Id == question.Id ).CountDocuments() )
+			{
+				case 0:
+					await context.questions.InsertOneAsync( question );
+					break;
+				case 1:
+					var filter = Builders<Question>.Filter.Eq( "_id", question.Id );
+					result = await context.questions.ReplaceOneAsync( filter, question );
+					break;
+				default:
+					throw new Exception( "Multiple processes with same ID found" );
+			}
+
+			return await Task.FromResult( question );
+		}
+
+		public Task<int> DeleteQuestion(int questionId)=> Task.FromResult( (int) context.questions.DeleteOne( Builders<Question>.Filter.Eq( "_id", questionId ) ).DeletedCount );
 	}
 
 	

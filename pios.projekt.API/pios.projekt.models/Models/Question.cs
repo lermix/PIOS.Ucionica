@@ -14,10 +14,15 @@ namespace pios.projekt.models.Models
 
         public string ExamQuestion { get; set; }
 
-        public Dictionary<int, string> possibleAnswers { get; set; } = new Dictionary<int, string>();
+        public List<KeyValue> possibleAnswers { get; set; }
 
         public int CorrectAnswer { get; set; }
 
-
     }
+
+    public class KeyValue
+	{
+		public int Key { get; set; }
+		public string Value { get; set; }
+	}
 }

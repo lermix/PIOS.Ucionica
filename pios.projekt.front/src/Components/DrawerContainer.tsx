@@ -6,7 +6,7 @@ import { Button } from '@progress/kendo-react-buttons';
 import '../Styles/drawerStyle.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logOut } from '../Stores/Security/actions';
 
 const items = [
@@ -15,6 +15,8 @@ const items = [
     { text: 'Managament', selected: true, icon: 'k-icon k-i-share', desc: '', route: '/Managament' },
     { separator: true },
     { text: 'Timetable builder', selected: true, icon: 'k-i-module-manager', route: '/TimetableBuilder' },
+    { separator: true },
+    { text: 'Exam builder', selected: true, icon: 'k-i-module-manager', route: '/ExamBuilder' },
     { separator: true },
     { text: 'Settings', icon: 'k-i-gear', desc: '', route: '/Settings' },
     { separator: true },
