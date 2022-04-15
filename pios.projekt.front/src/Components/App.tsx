@@ -34,6 +34,8 @@ import { setTokenIfExists } from '../Stores/Security/actions';
 import { VerifiedUser } from '../Models/User';
 import Login from './Shared/Login';
 import ExamBuilder from './Administrative/Exam/ExamBuilder';
+import ExamViewer from './Administrative/Exam/ExamViewer';
+import ExamSolving from './ExamSolving';
 
 load(
     likelySubtags,
@@ -84,7 +86,7 @@ const App: React.FC = () => {
         } else {
             setUserLogedIn(false);
         }
-    }, [verifiedUser.token, userLogedIn]);
+    }, [verifiedUser, userLogedIn]);
 
     return (
         <LocalizationProvider language={currentLanguageCode}>
@@ -94,13 +96,14 @@ const App: React.FC = () => {
                         <BrowserRouter>
                             <DrawerContainer>
                                 <Routes>
-                                    {!userLogedIn && <Route path="/" element={<Login />} />}
+                                    {!userLogedIn && <Route path="/*" element={<Login />} />}
                                     {userLogedIn && (
                                         <>
                                             <Route path="/*" element={<Home />} />
                                             <Route path="/Managament" element={<Managament />} />
                                             <Route path="/TimetableBuilder" element={<TimetableBuilder />} />
                                             <Route path="/ExamBuilder" element={<ExamBuilder />} />
+                                            <Route path="/Exams" element={<ExamSolving />} />
                                         </>
                                     )}
                                 </Routes>

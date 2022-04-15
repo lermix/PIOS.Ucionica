@@ -37,9 +37,11 @@ namespace Settlement.API.Security
 
 			var tokenUser = new VerifiedUser
 			{
-				Username = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value,
+				Username = claims.FirstOrDefault( x => x.Type == ClaimTypes.Name ).Value,
 				Roles = string.Join( ",", claims.Where( x => x.Type == ClaimTypes.Role ).Select( x => x.Value ).ToList() ),
-				Token = tokenHandler.WriteToken( token )
+				Token = tokenHandler.WriteToken( token ),
+				Id = Convert.ToInt32( claims.FirstOrDefault(e => e.Type == ClaimTypes.SerialNumber).Value )
+
 			};
 
 			return tokenUser;

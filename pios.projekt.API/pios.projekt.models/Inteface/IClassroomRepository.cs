@@ -48,5 +48,8 @@ namespace pios.projekt.models.Inteface
 		Task<List<Question>> GetQuestions();
 		Task<Question> AddQuestion(Question question);
 		Task<int> DeleteQuestion(int questionId);
+		Task<List<ExamResult>> GetExamResult();
+		Task<ExamResult> AddExamResult(ExamResult examResult);
+		Task<int> DeleteExamResult(int examResultId);
 	}
 }

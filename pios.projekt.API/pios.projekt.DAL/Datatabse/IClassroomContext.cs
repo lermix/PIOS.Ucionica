@@ -21,6 +21,8 @@ namespace pios.projekt.DAL.Datatabse
 
 		IMongoCollection<Exam> exams { get; }
 		IMongoCollection<Question> questions { get; }
+	    IMongoCollection<ExamResult> examResults { get; }
+
 
 
 	}

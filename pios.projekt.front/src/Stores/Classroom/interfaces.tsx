@@ -1,4 +1,5 @@
 import { Exam } from '../../Models/Exam';
+import { ExamResult } from '../../Models/ExamResult';
 import { Question } from '../../Models/Question';
 import { SchoolClass } from '../../Models/SchoolClass';
 import { Student } from '../../Models/Student';
@@ -16,6 +17,7 @@ export interface IClassroomState {
     timetableRows: TimetableRow[];
     exams: Exam[];
     question: Question[];
+    examResults: ExamResult[];
 }
 
 // ACTIONS
@@ -49,6 +51,11 @@ interface IGetQuestions {
     questions: Question[];
 }
 
+interface IGetExamResult {
+    type: typeof actionTypes.GET_EXAM_RESULTS;
+    examResults: ExamResult[];
+}
+
 interface IAddOrUpdateExam {
     type: typeof actionTypes.ADD_OR_UPDATE_EXAM;
     exam: Exam;
@@ -76,6 +83,11 @@ interface IAddOrUpdateClassroom {
 interface IAddOrUpdateQuestion {
     type: typeof actionTypes.ADD_OR_UPDTAE_QUESTION;
     question: Question;
+}
+
+interface IAddOrUpdateExamResult {
+    type: typeof actionTypes.ADD_OR_UPDATE_EXAM_RESULT;
+    examResult: ExamResult;
 }
 
 interface IDeleteSubject {
@@ -118,6 +130,11 @@ interface IDeleteTimetableRow {
     timetableRow: TimetableRow;
 }
 
+interface IDeleteExamResult {
+    type: typeof actionTypes.DELETE_EXAM_RESULT;
+    examResultId: number;
+}
+
 export type IActionType =
     | IGetStudents
     | IAddOrUpdateStudent
@@ -125,6 +142,7 @@ export type IActionType =
     | IAddOrUpdateTeacher
     | IAddOrUpdateClassroom
     | IAddOrUpdateExam
+    | IAddOrUpdateExamResult
     | IGetClassrooms
     | IGetSubjects
     | IGetTeachers
@@ -137,5 +155,7 @@ export type IActionType =
     | IDeleteSubject
     | IDeleteTeacher
     | IDeleteQuestion
+    | IDeleteExamResult
     | IAddOrUpdateQuestion
-    | IGetQuestions;
+    | IGetQuestions
+    | IGetExamResult;

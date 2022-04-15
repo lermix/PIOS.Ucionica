@@ -70,5 +70,12 @@ namespace pios.projekt.services
 
 
         public Task<int> DeleteQuestion(int questionId) => classroomRepository.DeleteQuestion(questionId);
-	}
+
+        public Task<List<ExamResult>> GetExamResults() => classroomRepository.GetExamResult();
+
+        public Task<ExamResult> AddExamResult(ExamResult examResult) => classroomRepository.AddExamResult(examResult);
+
+        public Task<int> DeleteExamResult(int examResultId) => classroomRepository.DeleteExamResult(examResultId);
+
+    }
 }

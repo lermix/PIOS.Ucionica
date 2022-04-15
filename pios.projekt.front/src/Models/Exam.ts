@@ -14,7 +14,7 @@ export interface Exam {
 }
 
 export class ExamClass implements Exam {
-    id = 0;
+    id = -1;
     name = '';
     students = [];
     subject = new SubjectClass();

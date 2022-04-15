@@ -237,7 +237,7 @@ namespace pios.projekt.DAL
 			foreach ( SchoolClass schoolClass in schoolClasses )
 				context.schoolClasses.ReplaceOne( Builders<SchoolClass>.Filter.Eq( "_id", schoolClass.Id ), schoolClass );
 
-			return Task.FromResult( (int) context.students.DeleteOne( Builders<Student>.Filter.Eq( "_id", studentId ) ).DeletedCount ); 
+			return Task.FromResult( (int) context.students.DeleteOne( Builders<Student>.Filter.Eq( "_id", studentId ) ).DeletedCount );
 		}
 
 		public Task<int> DeleteSubject(int subjectId)
@@ -256,33 +256,33 @@ namespace pios.projekt.DAL
 		public async Task<Exam> AddExam(Exam exam)
 		{
 			ReplaceOneResult result;
-			switch (context.schoolClasses.Find(x => x.Id == exam.Id).CountDocuments())
+			switch ( context.exams.Find( x => x.Id == exam.Id ).CountDocuments() )
 			{
 				case 0:
-					await context.exams.InsertOneAsync(exam);
+					await context.exams.InsertOneAsync( exam );
 					break;
 				case 1:
-					var filter = Builders<Exam>.Filter.Eq("_id", exam.Id);
-					result = await context.exams.ReplaceOneAsync(filter, exam);
+					var filter = Builders<Exam>.Filter.Eq( "_id", exam.Id );
+					result = await context.exams.ReplaceOneAsync( filter, exam );
 					break;
 				default:
-					throw new Exception("Multiple processes with same ID found");
+					throw new Exception( "Multiple processes with same ID found" );
 			}
 
-			return await Task.FromResult(exam);
+			return await Task.FromResult( exam );
 		}
 
 		public async Task<Exam> AddStudentsToExam(List<Student> students, int examId)
 		{
-			Exam exam = context.exams.AsQueryable().FirstOrDefault(x => x.Id == examId);
-			if (exam == null)
+			Exam exam = context.exams.AsQueryable().FirstOrDefault( x => x.Id == examId );
+			if ( exam == null )
 			{
 				return null;
 			}
-			exam.Students.AddRange(students);
-			return await Task.FromResult(exam);
+			exam.Students.AddRange( students );
+			return await Task.FromResult( exam );
 		}
-		public Task<int> DeleteExam(int examId) => Task.FromResult((int)context.exams.DeleteOne(Builders<Exam>.Filter.Eq("_id", examId)).DeletedCount);
+		public Task<int> DeleteExam(int examId) => Task.FromResult( (int) context.exams.DeleteOne( Builders<Exam>.Filter.Eq( "_id", examId ) ).DeletedCount );
 
 		public Task<List<Exam>> GetExams() => context.exams.AsQueryable().ToListAsync();
 
@@ -307,10 +307,31 @@ namespace pios.projekt.DAL
 			return await Task.FromResult( question );
 		}
 
-		public Task<int> DeleteQuestion(int questionId)=> Task.FromResult( (int) context.questions.DeleteOne( Builders<Question>.Filter.Eq( "_id", questionId ) ).DeletedCount );
+		public Task<int> DeleteQuestion(int questionId) => Task.FromResult( (int) context.questions.DeleteOne( Builders<Question>.Filter.Eq( "_id", questionId ) ).DeletedCount );
+
+		public Task<List<ExamResult>> GetExamResult() => context.examResults.AsQueryable().ToListAsync();
+		public async Task<ExamResult> AddExamResult(ExamResult examResult)
+		{
+			ReplaceOneResult result;
+			switch ( context.examResults.Find( x => x.Id == examResult.Id ).CountDocuments() )
+			{
+				case 0:
+					await context.examResults.InsertOneAsync( examResult );
+					break;
+				case 1:
+					var filter = Builders<ExamResult>.Filter.Eq( "_id", examResult.Id );
+					result = await context.examResults.ReplaceOneAsync( filter, examResult );
+					break;
+				default:
+					throw new Exception( "Multiple processes with same ID found" );
+			}
+
+			return await Task.FromResult( examResult );
+		}
+
+		public Task<int> DeleteExamResult(int examResultId) => Task.FromResult( (int) context.examResults.DeleteOne( Builders<ExamResult>.Filter.Eq( "_id", examResultId ) ).DeletedCount );
+
+
+
 	}
-
-	
-
-
 }

@@ -10,6 +10,7 @@ const initialState: ISecutiryState = {
 export function securityReducer(state: ISecutiryState = initialState, action: ISecurityActionType): ISecutiryState {
     switch (action.type) {
         case actionTypes.USER_LOGIN:
+            console.log('ININ');
             return {
                 ...state,
                 verifiedUser: action.verifiedUser,

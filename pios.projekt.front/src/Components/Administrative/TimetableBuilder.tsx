@@ -48,11 +48,17 @@ const TimetableBuilder: React.FC = () => {
     };
 
     const timetableCell = (cellProps: GridCellProps) => {
-        console.log(cellProps.dataItem[cellProps.field!]);
-        console.log(cellProps.dataItem[cellProps.field!].subject.name);
         if (cellProps.field)
             return <td>{cellProps.dataItem[cellProps.field].subject.name + ' - ' + cellProps.dataItem[cellProps.field].teacher.surname}</td>;
         else return <td></td>;
+    };
+
+    const deleteCell = (cellProps: GridCellProps) => {
+        return (
+            <td onClick={() => setTimetableRowsState(timetableRowsState.filter((e) => e.id !== cellProps.dataItem.id))}>
+                <span className="k-icon k-i-delete" />
+            </td>
+        );
     };
 
     return (
@@ -174,7 +180,10 @@ const TimetableBuilder: React.FC = () => {
                     />
                 )}
             </div>
-            <Button style={{ marginLeft: '90%', marginBottom: 30 }} onClick={() => setTimetableRowsState([...timetableRowsState, timetableRow])}>
+            <Button
+                style={{ marginLeft: '90%', marginBottom: 30 }}
+                onClick={() => setTimetableRowsState([...timetableRowsState, { ...timetableRow, id: timetableRowsState.length + 1 }])}
+            >
                 Add
             </Button>
             <Grid data={timetableRowsState}>
@@ -185,6 +194,7 @@ const TimetableBuilder: React.FC = () => {
                 <GridColumn field="wednesday" cell={timetableCell} />
                 <GridColumn field="thursday" cell={timetableCell} />
                 <GridColumn field="friday" cell={timetableCell} />
+                <GridColumn width={30} cell={deleteCell} />
             </Grid>
 
             <Button onClick={() => onSaveToDatabase()}>Save to database</Button>

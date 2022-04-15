@@ -9,6 +9,7 @@ const initialState: IClassroomState = {
     timetableRows: [],
     exams: [],
     question: [],
+    examResults: [],
 };
 
 // REDUCER
@@ -19,6 +20,7 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
     const tempClassrooms = state.classrooms;
     const tempExams = state.exams;
     const tempQuestion = state.question;
+    const tempExamResults = state.examResults;
     switch (action.type) {
         case actionTypes.GET_STUDENTS:
             return {
@@ -53,9 +55,14 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                 ...state,
                 exams: action.exams,
             };
+        case actionTypes.GET_EXAM_RESULTS:
+            return {
+                ...state,
+                examResults: action.examResults,
+            };
         case actionTypes.ADD_OR_UPDATE_EXAM:
             if (state.exams.find((e) => e.id === action.exam.id)) {
-                tempStudents.forEach((e, i) => {
+                tempExams.forEach((e, i) => {
                     if (e.id === action.exam.id) tempExams[i] = action.exam;
                 });
                 return {
@@ -66,6 +73,20 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
                 return {
                     ...state,
                     exams: [...tempExams, action.exam],
+                };
+        case actionTypes.ADD_OR_UPDATE_EXAM_RESULT:
+            if (state.examResults.find((e) => e.id === action.examResult.id)) {
+                tempExamResults.forEach((e, i) => {
+                    if (e.id === action.examResult.id) tempExamResults[i] = action.examResult;
+                });
+                return {
+                    ...state,
+                    examResults: tempExamResults,
+                };
+            } else
+                return {
+                    ...state,
+                    examResults: [...tempExamResults, action.examResult],
                 };
         case actionTypes.ADD_OR_UPDATE_STUDENT:
             if (state.students.find((e) => e.id === action.student.id)) {
@@ -147,6 +168,11 @@ export function classroomReducer(state: IClassroomState = initialState, action: 
             return {
                 ...state,
                 exams: state.exams.filter((e) => e.id !== action.examId),
+            };
+        case actionTypes.DELETE_EXAM_RESULT:
+            return {
+                ...state,
+                examResults: state.examResults.filter((e) => e.id !== action.examResultId),
             };
         case actionTypes.DELETE_TIMETABLE_ROW:
             return {

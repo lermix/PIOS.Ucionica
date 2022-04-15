@@ -28,8 +28,10 @@ namespace pios.projekt.DAL.Datatabse
 
         public IMongoCollection<Question> questions { get; }
 
+        public IMongoCollection<ExamResult> examResults { get; }
 
-		public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
+
+        public ClassroomContext(ILogger<ClassroomContext> logger, IOptions<ContextSettings> settings)
         {
             MongoClient client = null;
             if (settings.Value.MongoClientSettings != null)
@@ -49,6 +51,7 @@ namespace pios.projekt.DAL.Datatabse
                     timetableRow = database.GetCollection<TimetableRow>("TimetableRows");
                     exams = database.GetCollection<Exam>("Exams");
                     questions = database.GetCollection<Question>("Questions");
+                    examResults = database.GetCollection<ExamResult>("ExamResults");
                 }
             }
 

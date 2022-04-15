@@ -6,19 +6,24 @@ import { Button } from '@progress/kendo-react-buttons';
 import '../Styles/drawerStyle.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../Stores/Security/actions';
+import { Exam } from '../Models/Exam';
+import { AppState } from '../Stores/rootReducer';
+import { VerifiedUser, VerifiedUserClass } from '../Models/User';
+import { stat } from 'fs';
+import { isSameDate } from '../Helper/DateAnalyzer';
 
 const items = [
-    { text: 'Timetable', selected: true, icon: 'k-icon k-i-share', desc: 'Prikaz', route: '/' },
+    { text: 'Timetable', selected: true, icon: 'k-icon k-i-calendar', desc: 'Prikaz', route: '/' },
     { separator: true },
-    { text: 'Managament', selected: true, icon: 'k-icon k-i-share', desc: '', route: '/Managament' },
+    { text: 'Managament', selected: true, icon: 'k-icon k-i-gears', desc: '', route: '/Managament' },
     { separator: true },
     { text: 'Timetable builder', selected: true, icon: 'k-i-module-manager', route: '/TimetableBuilder' },
     { separator: true },
-    { text: 'Exam builder', selected: true, icon: 'k-i-module-manager', route: '/ExamBuilder' },
+    { text: 'Exam builder', selected: true, icon: 'k-icon k-i-wrench', route: '/ExamBuilder' },
     { separator: true },
-    { text: 'Settings', icon: 'k-i-gear', desc: '', route: '/Settings' },
+    { text: 'Exams', icon: 'k-icon k-i-table-align-top-left', desc: '', route: '/Exams' },
     { separator: true },
 ];
 
@@ -38,8 +43,19 @@ interface MyProps {
     children?: React.ReactNode;
 }
 
+interface IStateProps {
+    exams: Exam[];
+    verifiedUser: VerifiedUser;
+}
+
 const DrawerContainer: React.FC<MyProps> = ({ children }) => {
     const dispatch = useDispatch();
+    const { exams, verifiedUser } = useSelector<AppState, IStateProps>((state: AppState): IStateProps => {
+        return {
+            exams: state.classroom.exams,
+            verifiedUser: state.security.verifiedUser,
+        };
+    });
 
     const [expanded, setExpanded] = useState(true);
 
@@ -68,10 +84,17 @@ const DrawerContainer: React.FC<MyProps> = ({ children }) => {
         <div>
             <div className="custom-toolbar">
                 <Button icon="menu" look="flat" onClick={handleClick} />
-                <span className="title">Process visualizer</span>
-                <Button onClick={dispatch(logOut)} look="flat" style={{ float: 'right', marginRight: 20 }}>
-                    Logout
+                <span className="title">
+                    E-Classroom {new Date().getDate()}.{new Date().getMonth()}.{new Date().getFullYear()}
+                </span>
+
+                <Button onClick={() => dispatch(logOut())} look="flat" style={{ float: 'right', marginRight: 20 }}>
+                    LOGOUT
                 </Button>
+                <span style={{ color: 'darkblue', float: 'right', marginRight: 20, marginTop: 10 }}>User: {verifiedUser.username}</span>
+                {exams.find((e) => isSameDate(new Date(e.date), new Date()) && e.students.find((s) => s.id === verifiedUser.id)) && (
+                    <span style={{ color: 'red', float: 'right', marginRight: 20, marginTop: 10 }}>EXAM</span>
+                )}
             </div>
             <Drawer
                 expanded={expanded}

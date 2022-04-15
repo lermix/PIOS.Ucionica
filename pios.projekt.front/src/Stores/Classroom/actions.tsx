@@ -11,6 +11,7 @@ import { SchoolClass } from '../../Models/SchoolClass';
 import { TimetableRow } from '../../Models/TimetableRow';
 import { Exam } from '../../Models/Exam';
 import { Question } from '../../Models/Question';
+import { ExamResult } from '../../Models/ExamResult';
 
 const apiActions = {
     GetStudents: (): Promise<Student[]> => requests.get('Classroom/GetStudents'),
@@ -19,6 +20,7 @@ const apiActions = {
     GetClassrooms: (): Promise<SchoolClass[]> => requests.get('Classroom/GetSchoolClasses'),
     GetExams: (): Promise<Exam[]> => requests.get('Classroom/GetExams'),
     GetQuestion: (): Promise<Question[]> => requests.get('Classroom/GetQuestions'),
+    GetExamResults: (): Promise<ExamResult[]> => requests.get('Classroom/GetExamResults'),
 
     AddOrUpdateStudent: (student: Student): Promise<Student> => requests.post('Classroom/AddStudent', student),
     AddOrUpdateSubject: (subject: Subject): Promise<Subject> => requests.post('Classroom/AddSubject', subject),
@@ -26,6 +28,7 @@ const apiActions = {
     AddOrUpdateClassroom: (classroom: SchoolClass): Promise<SchoolClass> => requests.post('Classroom/AddClass', classroom),
     AddOrUpdateExam: (exam: Exam): Promise<Exam> => requests.post('Classroom/AddExam', exam),
     AddOrUpdateQuestion: (question: Question): Promise<Question> => requests.post('Classroom/AddQuestion', question),
+    AddOrUpdateExamResult: (examResult: ExamResult): Promise<ExamResult> => requests.post('Classroom/AddExamResult', examResult),
 
     DeleteStudent: (studentId: number): Promise<number> => requests.post(`Classroom/DeleteStudent?studentId=${studentId}`, {}),
     DeleteSubject: (subjectId: number): Promise<number> => requests.post(`Classroom/DeleteSubject?subjectId=${subjectId}`, {}),
@@ -33,6 +36,7 @@ const apiActions = {
     DeleteClassroom: (classroomId: number): Promise<number> => requests.post(`Classroom/DeleteClassroom?classroomId=${classroomId}`, {}),
     DeleteExam: (examId: number): Promise<number> => requests.post(`Classroom/DeleteExam?examId=${examId}`, {}),
     DeleteQuestion: (quetionId: number): Promise<number> => requests.post(`Classroom/DeleteQuestion?questionId=${quetionId}`, {}),
+    DeleteExamResult: (examResultId: number): Promise<number> => requests.post(`Classroom/DeleteExamResult?examResultId=${examResultId}`, {}),
 
     AddTimetableRow: (timetableRow: TimetableRow): Promise<TimetableRow> => requests.post('Classroom/AddTimetableRow', timetableRow),
     DeleteTimetableRow: (timetableRow: TimetableRow): Promise<TimetableRow> => requests.post('Classroom/DeleteTimetableRow', timetableRow),
@@ -127,11 +131,42 @@ export const GetQuestions = (): ThunkAction<void, AppState, unknown, Action<stri
         console.log(error);
     }
 };
+export const GetExamResults = (): ThunkAction<void, AppState, unknown, Action<string>> => async (dispatch) => {
+    const GetExamResultsSuccess = (examResults: ExamResult[]): IActionType => {
+        return {
+            type: actionTypes.GET_EXAM_RESULTS,
+            examResults: examResults,
+        };
+    };
+
+    try {
+        dispatch(GetExamResultsSuccess(await apiActions.GetExamResults()));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const addOrUpdateExamResult =
+    (examResult: ExamResult): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const addOrUpdateExamResultSuccess = (examResult: ExamResult): IActionType => {
+            return {
+                type: actionTypes.ADD_OR_UPDATE_EXAM_RESULT,
+                examResult: examResult,
+            };
+        };
+
+        try {
+            dispatch(addOrUpdateExamResultSuccess(await apiActions.AddOrUpdateExamResult(examResult)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 export const addOrUpdateExam =
     (exam: Exam): ThunkAction<void, AppState, unknown, Action<string>> =>
     async (dispatch) => {
-        const addOrUpdateExam = (exam: Exam): IActionType => {
+        const addOrUpdateExamSuccess = (exam: Exam): IActionType => {
             return {
                 type: actionTypes.ADD_OR_UPDATE_EXAM,
                 exam: exam,
@@ -139,7 +174,7 @@ export const addOrUpdateExam =
         };
 
         try {
-            dispatch(addOrUpdateExam(await apiActions.AddOrUpdateExam(exam)));
+            dispatch(addOrUpdateExamSuccess(await apiActions.AddOrUpdateExam(exam)));
         } catch (error) {
             console.log(error);
         }
@@ -278,6 +313,23 @@ export const DeleteExam =
 
         try {
             await apiActions.DeleteExam(examId).then((deletedCount) => deletedCount > 0 && dispatch(delteExamSucces(examId)));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+export const DeleteExamResult =
+    (ExamResultId: number): ThunkAction<void, AppState, unknown, Action<string>> =>
+    async (dispatch) => {
+        const delteExamResultSucces = (examResultId: number): IActionType => {
+            return {
+                type: actionTypes.DELETE_EXAM_RESULT,
+                examResultId: examResultId,
+            };
+        };
+
+        try {
+            await apiActions.DeleteExamResult(ExamResultId).then((deletedCount) => deletedCount > 0 && dispatch(delteExamResultSucces(ExamResultId)));
         } catch (error) {
             console.log(error);
         }

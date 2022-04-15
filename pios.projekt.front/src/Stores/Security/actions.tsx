@@ -10,10 +10,10 @@ const apiActions = {
     Login: (login: LoginDto): Promise<VerifiedUser> => requests.post('Security/Login', login),
 };
 
-export function dispatchUserInfo(token: string | undefined, username: string | undefined, role: string | undefined): ISecurityActionType {
+export function dispatchUserInfo(token: string | undefined, username: string | undefined, role: string | undefined, id: number): ISecurityActionType {
     return {
         type: actionTypes.USER_LOGIN,
-        verifiedUser: { token: token, username: username, roles: role },
+        verifiedUser: { token: token, username: username, roles: role, id: id },
     };
 }
 export const login =
@@ -22,6 +22,7 @@ export const login =
         function loginSuccess(verifiedUser: VerifiedUser): ISecurityActionType {
             if (verifiedUser.token) {
                 document.cookie = `jwt=` + verifiedUser.token + `;path=/`;
+                document.cookie = `id = ${verifiedUser.id}`;
                 verifiedUser.username && (document.cookie = `username=` + verifiedUser.username + `; path=/`);
             }
             return {
@@ -41,18 +42,16 @@ export const logOut = (): ThunkAction<void, AppState, unknown, Action<string>> =
     function logOut(): ISecurityActionType {
         return {
             type: actionTypes.USER_LOGIN,
-            verifiedUser: { token: undefined, username: undefined, roles: undefined },
+            verifiedUser: { token: undefined, username: undefined, roles: undefined, id: -2 },
         };
     }
-
     try {
         document.cookie.split(';').forEach(function (c) {
             document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
         });
-        //window.localStorage.clear();
         dispatch(logOut());
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };
 
@@ -66,6 +65,10 @@ export const setTokenIfExists = (): ThunkAction<void, AppState, unknown, Action<
             .split('; ')
             .find((row) => row.startsWith('username='))
             ?.split('=')[1];
+        const id = document.cookie
+            .split('; ')
+            .find((row) => row.startsWith('id='))
+            ?.split('=')[1];
 
         if (token) {
             const jwtData = token.split('.')[1];
@@ -73,10 +76,10 @@ export const setTokenIfExists = (): ThunkAction<void, AppState, unknown, Action<
             const decodedJwtData = JSON.parse(decodedJwtJsonData);
 
             const roles = decodedJwtData.role;
-            dispatch(dispatchUserInfo(token, username, roles));
+            dispatch(dispatchUserInfo(token, username, roles, Number(id)));
         }
     } catch (error) {
-        dispatch(dispatchUserInfo(undefined, undefined, undefined));
+        dispatch(dispatchUserInfo(undefined, undefined, undefined, -2));
         console.log(error);
     }
 };
