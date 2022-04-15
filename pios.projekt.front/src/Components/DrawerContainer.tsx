@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../Stores/Security/actions';
 import { Exam } from '../Models/Exam';
 import { AppState } from '../Stores/rootReducer';
-import { VerifiedUser, VerifiedUserClass } from '../Models/User';
-import { stat } from 'fs';
+import { VerifiedUser } from '../Models/User';
 import { isSameDate } from '../Helper/DateAnalyzer';
 
 const items = [
@@ -24,6 +23,8 @@ const items = [
     { text: 'Exam builder', selected: true, icon: 'k-icon k-i-wrench', route: '/ExamBuilder' },
     { separator: true },
     { text: 'Exams', icon: 'k-icon k-i-table-align-top-left', desc: '', route: '/Exams' },
+    { separator: true },
+    { text: 'Exams results', icon: 'k-icon k-i-spell-checker', desc: '', route: '/ExamsResults' },
     { separator: true },
 ];
 
@@ -58,9 +59,15 @@ const DrawerContainer: React.FC<MyProps> = ({ children }) => {
     });
 
     const [expanded, setExpanded] = useState(true);
+    const [itemState, setItemState] = useState<any[]>(items);
 
     const location = useLocation();
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        getitems();
+    }, [verifiedUser, location]);
 
     const handleClick = () => {
         setExpanded(!expanded);
@@ -80,6 +87,20 @@ const DrawerContainer: React.FC<MyProps> = ({ children }) => {
 
     const selected = setSelectedItem(location.pathname);
 
+    const getitems = () => {
+        if (!verifiedUser.roles?.includes('Admin')) {
+            setItemState(
+                items
+                    .filter((e) => e.text !== 'Managament' && e.text !== 'Timetable builder' && e.text !== 'Exam builder')
+                    .map((item) => ({ ...item, selected: item.text === selected })),
+            );
+            if (verifiedUser.roles?.includes('Teacher'))
+                setItemState(
+                    items.filter((e) => e.text !== 'Managament' && e.text !== 'Exams').map((item) => ({ ...item, selected: item.text === selected })),
+                );
+        } else setItemState(items.map((item) => ({ ...item, selected: item.text === selected })));
+    };
+
     return (
         <div>
             <div className="custom-toolbar">
@@ -92,19 +113,12 @@ const DrawerContainer: React.FC<MyProps> = ({ children }) => {
                     LOGOUT
                 </Button>
                 <span style={{ color: 'darkblue', float: 'right', marginRight: 20, marginTop: 10 }}>User: {verifiedUser.username}</span>
-                {exams.find((e) => isSameDate(new Date(e.date), new Date()) && e.students.find((s) => s.id === verifiedUser.id)) && (
-                    <span style={{ color: 'red', float: 'right', marginRight: 20, marginTop: 10 }}>EXAM</span>
-                )}
+                {exams.find((e) => isSameDate(new Date(e.date), new Date()) && e.students.find((s) => s.id === verifiedUser.id)) &&
+                    verifiedUser.roles?.includes('Student') && (
+                        <span style={{ color: 'red', float: 'right', marginRight: 20, marginTop: 10 }}>EXAM</span>
+                    )}
             </div>
-            <Drawer
-                expanded={expanded}
-                mode="push"
-                mini={true}
-                width={175}
-                items={items.map((item) => ({ ...item, selected: item.text === selected }))}
-                item={CustomItem}
-                onSelect={onSelect}
-            >
+            <Drawer expanded={expanded} mode="push" mini={true} width={175} items={itemState} item={CustomItem} onSelect={onSelect}>
                 <DrawerContent style={{ width: '100%' }}>{children}</DrawerContent>
             </Drawer>
         </div>

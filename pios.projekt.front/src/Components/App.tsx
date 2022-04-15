@@ -28,7 +28,7 @@ import enLocalCurrency from 'cldr-numbers-full/main/en-GB/currencies.json';
 import enCaGregorian from 'cldr-dates-full/main/en-GB/ca-gregorian.json';
 import enDateFields from 'cldr-dates-full/main/en-GB/dateFields.json';
 import kendoMessagesEN from './../localization/kendoMessagesLocalization/kendoMessages_en-GB.json';
-import { getClassrooms, getExams, GetQuestions, getStudents, getSubject, GetTeachers } from '../Stores/Classroom/actions';
+import { getClassrooms, GetExamResults, getExams, GetQuestions, getStudents, getSubject, GetTeachers } from '../Stores/Classroom/actions';
 import TimetableBuilder from './Administrative/TimetableBuilder';
 import { setTokenIfExists } from '../Stores/Security/actions';
 import { VerifiedUser } from '../Models/User';
@@ -36,6 +36,7 @@ import Login from './Shared/Login';
 import ExamBuilder from './Administrative/Exam/ExamBuilder';
 import ExamViewer from './Administrative/Exam/ExamViewer';
 import ExamSolving from './ExamSolving';
+import ExamResults from './ExamResults';
 
 load(
     likelySubtags,
@@ -77,6 +78,7 @@ const App: React.FC = () => {
         dispatch(getClassrooms());
         dispatch(getExams());
         dispatch(GetQuestions());
+        dispatch(GetExamResults());
         dispatch(setTokenIfExists());
     }, [dispatch]);
 
@@ -104,6 +106,7 @@ const App: React.FC = () => {
                                             <Route path="/TimetableBuilder" element={<TimetableBuilder />} />
                                             <Route path="/ExamBuilder" element={<ExamBuilder />} />
                                             <Route path="/Exams" element={<ExamSolving />} />
+                                            <Route path="/ExamsResults" element={<ExamResults />} />
                                         </>
                                     )}
                                 </Routes>

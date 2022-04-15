@@ -34,7 +34,7 @@ namespace pios.projekt.API.Controllers
 				List<Claim> claims = new List<Claim>();
 				await Task.Run( () => claims = _claimProvider.GetRoles( login.Username, login.Password ) );
 
-				if ( claims == null )
+				if ( claims == null || claims.Count == 0 )
 					return Unauthorized();
 				else
 					return Ok( _tokenService.CreateToken( claims ) );
