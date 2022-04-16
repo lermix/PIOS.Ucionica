@@ -108,7 +108,7 @@ namespace pios.projekt.TEST
 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-			var response = client.GetAsync("GetExamResult").Result;
+			var response = client.GetAsync( "GetExamResults" ).Result;
 			Console.WriteLine(response.StatusCode);
 			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 		}
@@ -125,7 +125,7 @@ namespace pios.projekt.TEST
 			{
 				Id = -10,
 				studentId = -10,
-				examId=-10,
+				ExamId=-10,
 				NumOfCorrectAnswers = 1,
 			};
 
@@ -178,7 +178,7 @@ namespace pios.projekt.TEST
 			Assert.AreEqual( JsonConvert.SerializeObject(question).ToLower(), response.Content.ReadAsStringAsync().Result.ToLower());
 
 
-			response = client.PostAsync( $"DeleteSQuestion?questionId={-10}", new StringContent( "" ) ).Result;
+			response = client.PostAsync( $"DeleteQuestion?questionId={-10}", new StringContent( "" ) ).Result;
 			Assert.AreEqual( HttpStatusCode.OK, response.StatusCode );
 			Assert.AreEqual( 1, Convert.ToInt32(response.Content.ReadAsStringAsync().Result) );
 
@@ -210,16 +210,16 @@ namespace pios.projekt.TEST
 				Id = -10,
 				Name = "Test",
 				students = new List<Student>(),
-				timetableRow = new List<TimetableRow>(),
+				timetableRows = new List<TimetableRow>(),
 			};
 
 			HttpContent content = new StringContent(JsonConvert.SerializeObject(schoolClass), Encoding.UTF8, "application/json");
-			var response = client.PostAsync("AddSchoolClass", content).Result;
+			var response = client.PostAsync( "AddClass", content).Result;
 			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 			Assert.AreEqual(JsonConvert.SerializeObject(schoolClass).ToLower(), response.Content.ReadAsStringAsync().Result.ToLower());
 
 
-			response = client.PostAsync($"DeleteSchoolClass?schoolClassId={-10}", new StringContent("")).Result;
+			response = client.PostAsync($"DeleteClassroom?classroomId={-10}", new StringContent("")).Result;
 			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 			Assert.AreEqual(1, Convert.ToInt32(response.Content.ReadAsStringAsync().Result));
 
@@ -233,7 +233,7 @@ namespace pios.projekt.TEST
 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
-			var response = client.GetAsync("Getubjects").Result;
+			var response = client.GetAsync("GetSubjects").Result;
 			Console.WriteLine(response.StatusCode);
 			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 		}
@@ -293,7 +293,7 @@ namespace pios.projekt.TEST
 				Name = "Test",
 				Surname = "Test",
 				subjects = new List<Subject>(),
-				schoolClasses = new List<TiSchoolClass>(),
+				schoolClasses = new List<SchoolClass>(),
 			};
 
 			HttpContent content = new StringContent(JsonConvert.SerializeObject(teacher), Encoding.UTF8, "application/json");
@@ -308,50 +308,6 @@ namespace pios.projekt.TEST
 
 		}
 
-		[Test]
-		public void GetTimetableRowsTest()
-		{
-			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri("https://localhost:44354/api/Classroom/");
-			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-			var response = client.GetAsync("GetTimetableRows").Result;
-			Console.WriteLine(response.StatusCode);
-			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-		}
-
-		[Test]
-		public void AddAndDeleteTimetableRowTest()
-		{
-			HttpClient client = new HttpClient();
-			client.BaseAddress = new Uri("https://localhost:44354/api/Classroom/");
-			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
-			TimetableRow timetableRow = new TimetableRow
-			{
-				Id = -10,
-				FromHour = 8,
-				ToHour = 9,
-				Monday = new TimetableItem(),
-				Tuesday = new TimetableItem(),
-				Wednesday = new TimetableItem(),
-				Thursday = new TimetableItem(),
-				Friday = new TimetableItem(),
-			};
-
-			HttpContent content = new StringContent(JsonConvert.SerializeObject(timetableRow), Encoding.UTF8, "application/json");
-			var response = client.PostAsync("AddTimetableRow", content).Result;
-			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-			Assert.AreEqual(JsonConvert.SerializeObject(timetableRow).ToLower(), response.Content.ReadAsStringAsync().Result.ToLower());
-
-
-			response = client.PostAsync($"DeleteTimetableRow?timetableRowId={-10}", new StringContent("")).Result;
-			Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-			Assert.AreEqual(1, Convert.ToInt32(response.Content.ReadAsStringAsync().Result));
-
-		}
 
 
 
