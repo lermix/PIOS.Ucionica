@@ -106,7 +106,7 @@ const DrawerContainer: React.FC<MyProps> = ({ children }) => {
             <div className="custom-toolbar">
                 <Button icon="menu" look="flat" onClick={handleClick} />
                 <span className="title">
-                    E-Classroom {new Date().getDate()}.{new Date().getMonth()}.{new Date().getFullYear()}
+                    E-Classroom {new Date().getDate()}.{new Date().getMonth() + 1}.{new Date().getFullYear()}
                 </span>
 
                 <Button onClick={() => dispatch(logOut())} look="flat" style={{ float: 'right', marginRight: 20 }}>

@@ -40,6 +40,17 @@ const ExamResults: React.FC = () => {
         return <td>{student?.name + ' ' + student?.surname}</td>;
     };
 
+    const examDateCell = (cellProps: GridCellProps) => {
+        const exam = exams.find((s) => s.id === cellProps.dataItem.examId);
+        if (exam?.date)
+            return (
+                <td>
+                    {new Date(exam.date).getDate()}.{new Date(exam.date).getMonth() + 1}.{new Date(exam.date).getFullYear()}
+                </td>
+            );
+        else return <td>Nema datuma</td>;
+    };
+
     return (
         <>
             <h4 style={{ fontWeight: 'bold' }}>Rezultati</h4>
@@ -48,6 +59,7 @@ const ExamResults: React.FC = () => {
                     <GridColumn title="Subject" cell={examSubjectCell} />
                     <GridColumn title="Correct" field="numOfCorrectAnswers" />
                     <GridColumn title="Total" cell={examTotalCell} />
+                    <GridColumn title="Date" cell={examDateCell} />
                 </Grid>
             )}
             {verifiedUser.roles?.includes('Teacher') && (
@@ -67,7 +79,7 @@ const ExamResults: React.FC = () => {
                     <GridColumn title="Subject" cell={examSubjectCell} />
                     <GridColumn title="Correct" field="numOfCorrectAnswers" />
                     <GridColumn title="Total" cell={examTotalCell} />
-                    <GridColumn title="Total" cell={examStudentCell} />
+                    <GridColumn title="Student" cell={examStudentCell} />
                 </Grid>
             )}
         </>

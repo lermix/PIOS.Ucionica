@@ -100,6 +100,17 @@ const CreateExam: React.FC<IProps> = ({ selectExam }) => {
         );
     };
 
+    const examDateCell = (cellProps: GridCellProps) => {
+        if (exam?.date)
+            return (
+                <td>
+                    {new Date(cellProps.dataItem.date).getDate()}.{new Date(cellProps.dataItem.date).getMonth() + 1}.
+                    {new Date(cellProps.dataItem.date).getFullYear()}
+                </td>
+            );
+        else return <td>Nema datuma</td>;
+    };
+
     return (
         <Splitter>
             <div style={{ marginLeft: 15 }}>
@@ -229,8 +240,9 @@ const CreateExam: React.FC<IProps> = ({ selectExam }) => {
                             rowRender={(row, rowProps) => rowRenderSingleItem(row, rowProps, exam.id)}
                         >
                             <GridColumn field="name" />
-                            <GridColumn field="teacher.surname" />
-                            <GridColumn field="subject.name" />
+                            <GridColumn title="Teacher" field="teacher.surname" />
+                            <GridColumn title="Subject" field="subject.name" />
+                            <GridColumn title="Date" cell={examDateCell} width={80} />
                             <GridColumn cell={DeleteExamCell} width={30} />
                         </Grid>
                         <Button onClick={() => setWindowView(0)}>Back</Button>
